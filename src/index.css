@@ -1,18 +1,38 @@
-/* Base styles */
+/* Base styles - Islamic Design Theme */
 :root {
-  --primary-color: #3498db;
-  --primary-dark: #2980b9;
-  --secondary-color: #2c3e50;
-  --secondary-light: #34495e;
-  --success-color: #2ecc71;
-  --danger-color: #e74c3c;
-  --warning-color: #f39c12;
+  --primary-color: #0d7377;
+  --primary-dark: #0a5c5f;
+  --secondary-color: #14213d;
+  --accent-color: #fca311;
+  --success-color: #2d6a4f;
+  --danger-color: #d62828;
+  --warning-color: #f77f00;
   --light-color: #f8f9fa;
-  --dark-color: #343a40;
+  --dark-color: #212529;
   --gray-color: #6c757d;
-  --border-color: #dee2e6;
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --border-color: #e9ecef;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   --transition: all 0.3s ease;
+  --bg-color: #f8f9fa;
+  --text-color: #212529;
+  --card-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --primary-color: #14a085;
+  --primary-dark: #0d7377;
+  --secondary-color: #e5e5e5;
+  --accent-color: #ffd60a;
+  --success-color: #52b788;
+  --danger-color: #ef476f;
+  --warning-color: #fca311;
+  --bg-color: #0f1419;
+  --text-color: #e9ecef;
+  --card-bg: #1a1f26;
+  --border-color: #2d3748;
+  --gray-color: #718096;
+  --light-color: #2d3748;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -23,10 +43,11 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #f5f7fa;
-  color: #333;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   line-height: 1.6;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app-container {
@@ -87,11 +108,12 @@ a:hover {
 
 /* Navbar */
 .navbar {
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 8px rgba(13, 115, 119, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
+  border-bottom: 2px solid var(--primary-color);
 }
 
 .navbar .container {
@@ -123,6 +145,7 @@ a:hover {
 .nav-links {
   display: flex;
   gap: 1.5rem;
+  align-items: center;
 }
 
 .nav-links a {
@@ -209,26 +232,34 @@ a:hover {
   transition: var(--transition);
 }
 
-/* Breadcrumb */
-.breadcrumb {
-  background-color: white;
-  border-bottom: 1px solid var(--border-color);
-  padding: 1rem 0;
-  margin-bottom: 2rem;
+/* Breadcrumb - Removed to eliminate extra space */
+
+.btn-icon {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: var(--transition);
 }
 
-.breadcrumb h1 {
-  margin: 0;
-  font-size: 1.75rem;
+.btn-icon:hover {
+  transform: scale(1.1);
 }
 
 /* Cards */
 .card {
-  background-color: white;
-  border-radius: 8px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
   box-shadow: var(--shadow);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(13, 115, 119, 0.15);
 }
 
 .card-header {
@@ -261,6 +292,8 @@ input, textarea, select {
   border-radius: 4px;
   font-size: 1rem;
   transition: var(--transition);
+  background-color: var(--card-bg);
+  color: var(--text-color);
 }
 
 input:focus, textarea:focus, select:focus {
@@ -299,6 +332,7 @@ input:focus, textarea:focus, select:focus {
 
 .btn-primary:hover {
   background-color: var(--primary-dark);
+  color: white;
 }
 
 .btn-secondary {
@@ -339,6 +373,10 @@ input:focus, textarea:focus, select:focus {
   color: white;
 }
 
+.btn-full {
+  width: 100%;
+}
+
 .btn-sm {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -359,7 +397,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .auth-card {
-  background-color: white;
+  background-color: var(--card-bg);
   border-radius: 8px;
   box-shadow: var(--shadow);
   padding: 2rem;
@@ -387,7 +425,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .stat-card {
-  background-color: white;
+  background-color: var(--card-bg);
   border-radius: 8px;
   box-shadow: var(--shadow);
   padding: 1.5rem;
@@ -635,7 +673,7 @@ tr:hover {
 
 /* Footer */
 .footer {
-  background-color: white;
+  background-color: var(--card-bg);
   border-top: 1px solid var(--border-color);
   padding: 1.5rem 0;
   margin-top: auto;
