@@ -32,15 +32,12 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!refreshToken) {
+        return Promise.reject(error);
+      }
+      
       try {
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (!refreshToken) {
-          // No refresh token available, redirect to login
-          localStorage.clear();
-          window.location.href = '/login';
-          return Promise.reject(error);
-        }
-        
         // Try to refresh the token
         const response = await axios.post(`${API_URL}/auth/refresh`, {
           refreshToken,
@@ -56,9 +53,9 @@ api.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${access_token}`;
         return api(originalRequest);
       } catch (refreshError) {
-        // Refresh token failed, redirect to login
-        localStorage.clear();
-        window.location.href = '/login';
+        // Only clear tokens, don't redirect (let AuthContext handle it)
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         return Promise.reject(refreshError);
       }
     }
@@ -126,6 +123,33 @@ export const uploadService = {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
   },
+};
+
+// Quran services
+export const quranService = {
+  getSurahs: () => api.get('/quran/surahs'),
+  getSurah: (number) => api.get(`/quran/surahs/${number}`),
+  getSurahVerses: (number, page = 1, limit = 50) => 
+    api.get(`/quran/surahs/${number}/verses?page=${page}&limit=${limit}`),
+  getVerses: (page = 1, limit = 20) => 
+    api.get(`/quran/verses?page=${page}&limit=${limit}`),
+  searchVerses: (query) => api.get(`/quran/search/verses?q=${query}`),
+  getJuz: () => api.get('/quran/juz'),
+  getJuzById: (number) => api.get(`/quran/juz/${number}`),
+};
+
+// Bookmark services
+export const bookmarkService = {
+  getBookmarks: (page = 1, limit = 20) => 
+    api.get(`/bookmarks?page=${page}&limit=${limit}`),
+  createBookmark: (verseId, note) => 
+    api.post('/bookmarks', { verseId, note }),
+  deleteBookmark: (id) => api.delete(`/bookmarks/${id}`),
+  updateNote: (id, note) => 
+    api.patch(`/bookmarks/${id}/note`, { note }),
+  getProgress: () => api.get('/bookmarks/progress'),
+  updateProgress: (verseId, surahNumber, pageNumber) => 
+    api.post('/bookmarks/progress', { verseId, surahNumber, pageNumber }),
 };
 
 export default api;
