@@ -1,72 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Button } from "../components/ui";
+import { STORAGE_KEYS, storage } from "../utils";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { login, error, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // If user is already logged in, redirect to home
-    if (user) {
-      navigate("/");
-    }
-
-    // Check for saved email
-    const savedEmail = localStorage.getItem("rememberedEmail");
+    if (user) navigate("/");
+    const savedEmail = storage.get(STORAGE_KEYS.REMEMBERED_EMAIL);
     if (savedEmail) {
       setFormData((prev) => ({ ...prev, email: savedEmail }));
       setRememberMe(true);
     }
   }, [user, navigate]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    // Handle remember me
     if (rememberMe) {
-      localStorage.setItem("rememberedEmail", formData.email);
+      storage.set(STORAGE_KEYS.REMEMBERED_EMAIL, formData.email);
     } else {
-      localStorage.removeItem("rememberedEmail");
+      storage.remove(STORAGE_KEYS.REMEMBERED_EMAIL);
     }
-
     const success = await login(formData.email, formData.password);
-
     setIsLoading(false);
-    if (success) {
-      navigate("/");
-    }
+    if (success) navigate("/");
   };
 
   return (
     <div className="auth-container">
-      <div className="auth-card">
+      <div className="auth-card modern">
+        <div className="auth-icon">🕌</div>
         <h2>Welcome Back</h2>
-        <p
-          style={{
-            textAlign: "center",
-            marginBottom: "1.5rem",
-            color: "var(--gray-color)",
-          }}
-        >
-          Sign in to your account to continue
-        </p>
+        <p className="auth-subtitle">Sign in to continue your Quran journey</p>
 
         {error && <div className="error-message">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
             <input
@@ -74,7 +51,7 @@ const Login = () => {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleChange}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="your.email@example.com"
               required
               autoFocus
@@ -83,76 +60,60 @@ const Login = () => {
 
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-              required
-            />
+            <div className="password-wrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                placeholder="••••••••"
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? '👁️' : '👁️🗨️'}
+              </button>
+            </div>
           </div>
 
-          <div
-            className="form-group"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "1.5rem",
-            }}
-          >
-            <input
-              type="checkbox"
-              id="rememberMe"
-              checked={rememberMe}
-              onChange={() => setRememberMe(!rememberMe)}
-              style={{ width: "auto", marginRight: "0.5rem" }}
-            />
-            <label
-              htmlFor="rememberMe"
-              style={{ display: "inline", marginBottom: 0 }}
-            >
-              Remember me
+          <div className="form-options">
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
+              <span>Remember me</span>
             </label>
           </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="btn btn-primary"
-            style={{ width: "100%", padding: "0.75rem" }}
+          <Button 
+            type="submit" 
+            variant="primary" 
+            size="lg" 
+            fullWidth 
+            loading={isLoading}
           >
-            {isLoading ? (
-              <>
-                <span
-                  className="loader"
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    border: "2px solid rgba(255,255,255,0.3)",
-                    borderTopColor: "white",
-                    display: "inline-block",
-                    marginRight: "0.5rem",
-                    verticalAlign: "middle",
-                  }}
-                ></span>
-                Signing in...
-              </>
-            ) : (
-              "Sign In"
-            )}
-          </button>
+            Sign In
+          </Button>
         </form>
 
         <div className="auth-footer">
-          <p>Demo credentials:</p>
-          <p>
-            <strong>Admin:</strong> admin@example.com / password
-          </p>
-          <p>
-            <strong>User:</strong> user@example.com / password
-          </p>
+          <p className="demo-label">Demo Credentials</p>
+          <div className="demo-credentials">
+            <div className="credential-item">
+              <span className="credential-label">Email:</span>
+              <span className="credential-value">admin@mushaf.com</span>
+            </div>
+            <div className="credential-item">
+              <span className="credential-label">Password:</span>
+              <span className="credential-value">Admin@123</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
