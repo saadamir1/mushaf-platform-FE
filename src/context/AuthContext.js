@@ -34,11 +34,11 @@ export const AuthProvider = ({ children }) => {
     const checkLoggedIn = async () => {
       setLoading(true);
       const token = tokenHelpers.getAccessToken();
-      
+
       if (token) {
         await fetchUserProfile();
       }
-      
+
       setLoading(false);
       setAuthChecked(true);
     };
@@ -50,20 +50,20 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
       setLoading(true);
-      
+
       const response = await authService.login(email, password);
       const { access_token, refresh_token } = response.data;
-      
+
       tokenHelpers.setTokens(access_token, refresh_token);
-      
+
       const userData = await fetchUserProfile();
       setLoading(false);
       return !!userData;
     } catch (err) {
       setLoading(false);
-      
+
       let errorMessage = 'Login failed. Please try again.';
-      
+
       if (err.code === 'NETWORK_ERROR' || err.message === 'Network Error') {
         errorMessage = 'Server is currently unavailable. Please try again in a few minutes.';
       } else if (err.response?.status === 502 || err.response?.status === 503) {
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
       } else if (err.response?.data?.message) {
         errorMessage = err.response.data.message;
       }
-      
+
       setError(errorMessage);
       return false;
     }
@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }) => {
       return false;
     }
   };
-  
+
   const updateProfile = async (userData) => {
     try {
       setError(null);

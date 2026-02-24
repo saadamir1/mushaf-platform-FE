@@ -29,28 +29,28 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    
+
     // If error is 401 and we haven't tried to refresh token yet
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      
+
       const refreshToken = storage.get(STORAGE_KEYS.REFRESH_TOKEN);
       if (!refreshToken) {
         return Promise.reject(error);
       }
-      
+
       try {
         // Try to refresh the token
         const response = await axios.post(`${API_URL}/auth/refresh`, {
           refreshToken,
         });
-        
+
         const { access_token, refresh_token } = response.data;
-        
+
         // Store new tokens
         storage.set(STORAGE_KEYS.ACCESS_TOKEN, access_token);
         storage.set(STORAGE_KEYS.REFRESH_TOKEN, refresh_token);
-        
+
         // Retry original request with new token
         originalRequest.headers.Authorization = `Bearer ${access_token}`;
         return api(originalRequest);
@@ -61,7 +61,7 @@ api.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
-    
+
     return Promise.reject(error);
   }
 );
@@ -87,7 +87,7 @@ export const userService = {
 
 // City services
 export const cityService = {
-  getAllCities: (page = 1, limit = 10) => 
+  getAllCities: (page = 1, limit = 10) =>
     api.get(`/cities?page=${page}&limit=${limit}`),
   getCityById: (id) => api.get(`/cities/${id}`),
   createCity: (cityData) => api.post('/cities', cityData),
@@ -131,9 +131,9 @@ export const uploadService = {
 export const quranService = {
   getSurahs: () => api.get('/quran/surahs'),
   getSurah: (number) => api.get(`/quran/surahs/${number}`),
-  getSurahVerses: (number, page = 1, limit = 50) => 
+  getSurahVerses: (number, page = 1, limit = 50) =>
     api.get(`/quran/surahs/${number}/verses?page=${page}&limit=${limit}`),
-  getVerses: (page = 1, limit = 20) => 
+  getVerses: (page = 1, limit = 20) =>
     api.get(`/quran/verses?page=${page}&limit=${limit}`),
   searchVerses: (query) => api.get(`/quran/search/verses?q=${query}`),
   getJuz: () => api.get('/quran/juz'),
@@ -142,15 +142,15 @@ export const quranService = {
 
 // Bookmark services
 export const bookmarkService = {
-  getBookmarks: (page = 1, limit = 20) => 
+  getBookmarks: (page = 1, limit = 20) =>
     api.get(`/bookmarks?page=${page}&limit=${limit}`),
-  createBookmark: (verseId, note) => 
+  createBookmark: (verseId, note) =>
     api.post('/bookmarks', { verseId, note }),
   deleteBookmark: (id) => api.delete(`/bookmarks/${id}`),
-  updateNote: (id, note) => 
+  updateNote: (id, note) =>
     api.patch(`/bookmarks/${id}/note`, { note }),
   getProgress: () => api.get('/bookmarks/progress'),
-  updateProgress: (verseId, surahNumber, pageNumber) => 
+  updateProgress: (verseId, surahNumber, pageNumber) =>
     api.post('/bookmarks/progress', { verseId, surahNumber, pageNumber }),
 };
 

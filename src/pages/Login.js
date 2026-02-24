@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/ui";
 import { STORAGE_KEYS, storage } from "../utils";
@@ -91,11 +91,11 @@ const Login = () => {
             </label>
           </div>
 
-          <Button 
-            type="submit" 
-            variant="primary" 
-            size="lg" 
-            fullWidth 
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            fullWidth
             loading={isLoading}
           >
             Sign In
@@ -103,17 +103,10 @@ const Login = () => {
         </form>
 
         <div className="auth-footer">
-          <p className="demo-label">Demo Credentials</p>
-          <div className="demo-credentials">
-            <div className="credential-item">
-              <span className="credential-label">Email:</span>
-              <span className="credential-value">admin@mushaf.com</span>
-            </div>
-            <div className="credential-item">
-              <span className="credential-label">Password:</span>
-              <span className="credential-value">Admin@123</span>
-            </div>
-          </div>
+          <p>
+            Don't have an account?{" "}
+            <Link to="/register" className="auth-link">Create one</Link>
+          </p>
         </div>
       </div>
     </div>
