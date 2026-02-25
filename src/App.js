@@ -7,10 +7,6 @@ import Layout from "./components/Layout";
 import Loader from "./components/Loader";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-const Home = React.lazy(() => import("./pages/Home"));
-const SurahReader = React.lazy(() => import("./pages/SurahReader"));
-const Search = React.lazy(() => import("./pages/Search"));
-const Bookmarks = React.lazy(() => import("./pages/Bookmarks"));
 const Login = React.lazy(() => import("./pages/Login"));
 const Register = React.lazy(() => import("./pages/Register"));
 const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
@@ -29,10 +25,7 @@ function App() {
             <Suspense fallback={<Loader />}>
               <Layout>
                 <Routes>
-                  <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-                  <Route path="/surah/:number" element={<PrivateRoute><SurahReader /></PrivateRoute>} />
-                  <Route path="/search" element={<PrivateRoute><Search /></PrivateRoute>} />
-                  <Route path="/bookmarks" element={<PrivateRoute><Bookmarks /></PrivateRoute>} />
+                  <Route path="/" element={<PrivateRoute><Profile /></PrivateRoute>} />
                   <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
                   <Route path="/admin" element={<PrivateRoute adminOnly={true}><Admin /></PrivateRoute>} />
                   <Route path="/login" element={<Login />} />

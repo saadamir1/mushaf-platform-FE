@@ -43,13 +43,7 @@ const Navbar = () => {
         {/* ── Brand ── */}
         <div className="navbar-brand">
           <Link to="/" className="brand-link">
-            <img
-              src="/logo.png"
-              alt="Mushaf Platform"
-              className="nav-logo"
-              onError={(e) => { e.currentTarget.style.display = "none"; }}
-            />
-            <span className="brand-text">Mushaf</span>
+            <span className="brand-text">My App</span>
           </Link>
         </div>
 
@@ -70,34 +64,6 @@ const Navbar = () => {
 
           {user ? (
             <>
-              {/* Page links */}
-              <nav className="nav-links">
-                <Link
-                  to="/"
-                  className={`nav-link ${isActive("/") ? "active" : ""}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span className="nav-icon">📖</span>
-                  <span className="nav-text">Quran</span>
-                </Link>
-                <Link
-                  to="/search"
-                  className={`nav-link ${isActive("/search") ? "active" : ""}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span className="nav-icon">🔍</span>
-                  <span className="nav-text">Search</span>
-                </Link>
-                <Link
-                  to="/bookmarks"
-                  className={`nav-link ${isActive("/bookmarks") ? "active" : ""}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span className="nav-icon">🔖</span>
-                  <span className="nav-text">Bookmarks</span>
-                </Link>
-              </nav>
-
               {/* Right-side actions */}
               <div className="navbar-actions">
                 {/* Theme toggle */}
