@@ -82,32 +82,26 @@ const Register = () => {
 
                     {resendStatus && <div className="success-message">{resendStatus}</div>}
 
-                    <button
-                        className="resend-verification-btn"
-                        onClick={async () => {
-                            setIsResending(true);
-                            setResendStatus("");
-                            try {
-                                await authService.resendVerification(formData.email);
-                                setResendStatus("Verification email sent! Please check your inbox.");
-                            } catch (err) {
-                                setResendStatus("Failed to resend. Please try again.");
-                            }
-                            setIsResending(false);
-                        }}
-                        disabled={isResending}
-                        style={{
-                            background: 'none',
-                            border: 'none',
-                            color: '#4f46e5',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            marginTop: '10px',
-                            textDecoration: 'underline'
-                        }}
-                    >
-                        {isResending ? "Sending..." : "Didn't receive the email? Resend verification"}
-                    </button>
+                    <div className="resend-section">
+                        <p className="resend-text">Didn't receive the verification email?</p>
+                        <button
+                            className="btn btn-outline"
+                            onClick={async () => {
+                                setIsResending(true);
+                                setResendStatus("");
+                                try {
+                                    await authService.resendVerification(formData.email);
+                                    setResendStatus("Verification email sent! Please check your inbox.");
+                                } catch (err) {
+                                    setResendStatus("Failed to resend. Please try again.");
+                                }
+                                setIsResending(false);
+                            }}
+                            disabled={isResending}
+                        >
+                            {isResending ? "Sending..." : "Resend Verification Email"}
+                        </button>
+                    </div>
 
                     <div className="auth-footer">
                         <p>
