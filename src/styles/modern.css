@@ -552,6 +552,9 @@
    ============================================ */
 .error-message { background-color: rgba(220, 53, 69, 0.1); border: 1px solid var(--danger-color); color: var(--danger-color); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
 .success-message { background-color: rgba(40, 167, 69, 0.1); border: 1px solid #28a745; color: #28a745; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+.resend-link { background: none; border: none; color: var(--primary-color); cursor: pointer; font-size: 0.9rem; text-decoration: underline; margin-left: 0.5rem; }
+.resend-link:hover { color: var(--primary-dark); }
+.resend-link:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .error-boundary { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; background-color: var(--bg-color); }
 .error-content { text-align: center; max-width: 500px; }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/ui";
+import { authService } from "../services/api";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [validationError, setValidationError] = useState("");
     const [showSuccess, setShowSuccess] = useState(false);
+    const [resendStatus, setResendStatus] = useState("");
+    const [isResending, setIsResending] = useState(false);
     const { register, error, user } = useAuth();
     const navigate = useNavigate();
 
@@ -76,6 +79,36 @@ const Register = () => {
                     <p className="auth-subtitle">
                         Please check your email to verify your account before logging in.
                     </p>
+
+                    {resendStatus && <div className="success-message">{resendStatus}</div>}
+
+                    <button
+                        className="resend-verification-btn"
+                        onClick={async () => {
+                            setIsResending(true);
+                            setResendStatus("");
+                            try {
+                                await authService.resendVerification(formData.email);
+                                setResendStatus("Verification email sent! Please check your inbox.");
+                            } catch (err) {
+                                setResendStatus("Failed to resend. Please try again.");
+                            }
+                            setIsResending(false);
+                        }}
+                        disabled={isResending}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            color: '#4f46e5',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            marginTop: '10px',
+                            textDecoration: 'underline'
+                        }}
+                    >
+                        {isResending ? "Sending..." : "Didn't receive the email? Resend verification"}
+                    </button>
+
                     <div className="auth-footer">
                         <p>
                             Already verified?{" "}

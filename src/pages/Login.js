@@ -3,12 +3,16 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/ui";
 import { STORAGE_KEYS, storage } from "../utils";
+import { authService } from "../services/api";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showResendVerification, setShowResendVerification] = useState(false);
+  const [resendStatus, setResendStatus] = useState("");
+  const [isResending, setIsResending] = useState(false);
   const { login, error, user } = useAuth();
   const navigate = useNavigate();
 
@@ -41,7 +45,34 @@ const Login = () => {
         <h2>Welcome Back</h2>
         <p className="auth-subtitle">Sign in to continue your Quran journey</p>
 
-        {error && <div className="error-message">{error}</div>}
+        {error && (
+          <div className="error-message">
+            {error}
+            {error.includes("verify") && (
+              <button
+                type="button"
+                className="resend-link"
+                onClick={async () => {
+                  setIsResending(true);
+                  setResendStatus("");
+                  try {
+                    await authService.resendVerification(formData.email);
+                    setResendStatus("Verification email sent! Please check your inbox.");
+                    setShowResendVerification(false);
+                  } catch (err) {
+                    setResendStatus("Failed to resend. Please try again.");
+                  }
+                  setIsResending(false);
+                }}
+                disabled={isResending}
+              >
+                {isResending ? "Sending..." : "Resend verification email"}
+              </button>
+            )}
+          </div>
+        )}
+
+        {resendStatus && <div className="success-message">{resendStatus}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">

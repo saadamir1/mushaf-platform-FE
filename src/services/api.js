@@ -75,6 +75,7 @@ export const authService = {
   forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
   resetPassword: (token, newPassword) => api.post('/auth/reset-password', { token, newPassword }),
   verifyEmail: (token) => api.post('/auth/verify-email', { token }),
+  resendVerification: (email) => api.post('/auth/send-verification', { email }),
 };
 
 // User services
