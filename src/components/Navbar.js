@@ -119,8 +119,18 @@ const Navbar = () => {
                     aria-haspopup="true"
                   >
                     <div className="user-avatar">
-                      {user.firstName?.charAt(0)}
-                      {user.lastName?.charAt(0)}
+                      {user.profilePicture ? (
+                        <img
+                          src={user.profilePicture}
+                          alt="Profile"
+                          style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+                        />
+                      ) : (
+                        <>
+                          {user.firstName?.charAt(0)}
+                          {user.lastName?.charAt(0)}
+                        </>
+                      )}
                     </div>
                     <span className="user-name-nav">{user.firstName}</span>
                     <span className={`dropdown-arrow ${userMenuOpen ? "open" : ""}`}>▼</span>

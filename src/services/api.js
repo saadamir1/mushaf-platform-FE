@@ -87,6 +87,7 @@ export const userService = {
   updateProfile: (userData) => api.patch('/users/profile', userData),
   changePassword: (passwordData) => api.patch('/users/change-password', passwordData),
   deleteUser: (id) => api.delete(`/users/${id}`),
+  deleteAccount: () => api.delete('/users/account'),
 };
 
 // City services

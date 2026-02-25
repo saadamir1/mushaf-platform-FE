@@ -1,20 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { userService } from "../services/api";
+import { userService, uploadService } from "../services/api";
 
 const Profile = () => {
-    const { user, refreshUser } = useAuth();
+    const { user, refreshUser, logout } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
+    const fileInputRef = useRef(null);
 
     // Separate states for each form
     const [profileError, setProfileError] = useState("");
     const [profileSuccess, setProfileSuccess] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [passwordSuccess, setPasswordSuccess] = useState("");
+    const [uploadingPicture, setUploadingPicture] = useState(false);
+
+    // Delete account modal state
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
+    const [deleteError, setDeleteError] = useState("");
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -65,6 +72,47 @@ const Profile = () => {
             setProfileError(err.response?.data?.message || "Failed to update profile");
         } finally {
             setLoading(false);
+        }
+    };
+
+    // Profile picture upload handler
+    const handlePictureClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handlePictureChange = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setUploadingPicture(true);
+        try {
+            await uploadService.uploadProfilePicture(user.id, file);
+            await refreshUser();
+            setProfileSuccess("Profile picture updated!");
+            setTimeout(() => setProfileSuccess(""), 3000);
+        } catch (err) {
+            setProfileError(err.response?.data?.message || "Failed to upload picture");
+        } finally {
+            setUploadingPicture(false);
+            if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+            }
+        }
+    };
+
+    // Delete account handler
+    const handleDeleteAccount = async () => {
+        setDeleteLoading(true);
+        setDeleteError("");
+
+        try {
+            await userService.deleteAccount();
+            logout();
+            navigate("/");
+        } catch (err) {
+            setDeleteError(err.response?.data?.message || "Failed to delete account");
+        } finally {
+            setDeleteLoading(false);
         }
     };
 
@@ -135,9 +183,49 @@ const Profile = () => {
 
             <div className="profile-card">
                 <div className="profile-header">
-                    <div className="profile-avatar-large">
-                        {user.firstName?.charAt(0)}{user.lastName?.charAt(0)}
+                    <div
+                        className="profile-avatar-large"
+                        style={{ cursor: 'pointer', position: 'relative' }}
+                        onClick={handlePictureClick}
+                        title="Click to change profile picture"
+                    >
+                        {user.profilePicture ? (
+                            <img
+                                src={user.profilePicture}
+                                alt="Profile"
+                                style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+                            />
+                        ) : (
+                            <>
+                                {user.firstName?.charAt(0)}{user.lastName?.charAt(0)}
+                            </>
+                        )}
+                        {uploadingPicture && (
+                            <div style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                background: 'rgba(0,0,0,0.5)',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: 'white',
+                                fontSize: '0.75rem'
+                            }}>
+                                Uploading...
+                            </div>
+                        )}
                     </div>
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handlePictureChange}
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                    />
                     <div className="profile-details">
                         <h2>{user.firstName} {user.lastName}</h2>
                         <p>{user.email}</p>
@@ -253,6 +341,49 @@ const Profile = () => {
                             {loading ? 'Changing...' : 'Change Password'}
                         </button>
                     </form>
+                </div>
+
+                {/* Delete Account Section */}
+                <div className="profile-form-section" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem' }}>
+                    <h3 style={{ color: 'var(--danger-color)' }}>Danger Zone</h3>
+                    <p style={{ color: 'var(--gray-color)', marginBottom: '1rem' }}>
+                        Once you delete your account, there is no going back. Please be certain.
+                    </p>
+
+                    {!showDeleteConfirm ? (
+                        <button
+                            className="btn btn-danger"
+                            onClick={() => setShowDeleteConfirm(true)}
+                        >
+                            Delete My Account
+                        </button>
+                    ) : (
+                        <div style={{ background: 'rgba(220, 53, 69, 0.1)', padding: '1rem', borderRadius: '8px' }}>
+                            <p style={{ marginBottom: '1rem', fontWeight: '500' }}>
+                                Are you sure? This action cannot be undone.
+                            </p>
+                            {deleteError && <div className="error-message">{deleteError}</div>}
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={handleDeleteAccount}
+                                    disabled={deleteLoading}
+                                >
+                                    {deleteLoading ? 'Deleting...' : 'Yes, Delete My Account'}
+                                </button>
+                                <button
+                                    className="btn btn-secondary"
+                                    onClick={() => {
+                                        setShowDeleteConfirm(false);
+                                        setDeleteError("");
+                                    }}
+                                    disabled={deleteLoading}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
