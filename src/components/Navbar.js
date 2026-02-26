@@ -64,7 +64,21 @@ const Navbar = () => {
 
           {user ? (
             <>
-              {/* Right-side actions */}
+              {/* Left side: Navigation tabs */}
+              <ul className="nav-links">
+                <li>
+                  <Link
+                    to="/dashboard"
+                    className={`nav-link ${isActive("/dashboard") ? "active" : ""}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <span className="nav-icon">🏠</span>
+                    <span className="nav-text">Dashboard</span>
+                  </Link>
+                </li>
+              </ul>
+
+              {/* Right side: Actions */}
               <div className="navbar-actions">
                 {/* Theme toggle */}
                 <button

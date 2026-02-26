@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
       </main>
       <footer className="footer">
         <div className="container">
-          <p>&copy; {new Date().getFullYear()} Mushaf Platform - Digital Quran with Urdu Translation</p>
+          <p>&copy; {new Date().getFullYear()} My App - All rights reserved</p>
           <p style={{ fontSize: '12px', marginTop: '5px', opacity: 0.8 }}>Developed by Saad Amir</p>
         </div>
       </footer>

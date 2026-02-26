@@ -514,6 +514,124 @@
 }
 
 /* ============================================
+   DASHBOARD / CARDS
+   ============================================ */
+.dashboard-page { padding: 2rem 1rem; max-width: 1200px; margin: 0 auto; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+
+/* Generic Card Styles - reuse for any content */
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(13, 115, 119, 0.15);
+}
+
+.card:hover::before {
+  transform: scaleY(1);
+}
+
+.card-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+  color: var(--secondary-color);
+}
+
+.card-description {
+  margin: 0;
+  color: var(--gray-color);
+  font-size: 0.9rem;
+}
+
+/* Card Number Badge */
+.card-number {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+/* Card Arrow */
+.card-arrow {
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-arrow {
+  transform: translateX(4px);
+}
+
+/* Quick Links */
+.quick-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quick-links li {
+  padding: 0.5rem 0;
+}
+
+.quick-links a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.quick-links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .card { padding: 1rem; }
+  .card-number { width: 40px; height: 40px; font-size: 1rem; }
+}
+
+/* ============================================
    PROFILE PAGE
    ============================================ */
 .profile-page { max-width: 700px; margin: 0 auto; padding: 2rem 1rem; }

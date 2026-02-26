@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import Loader from "./components/Loader";
 import ErrorBoundary from "./components/ErrorBoundary";
 
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Login = React.lazy(() => import("./pages/Login"));
 const Register = React.lazy(() => import("./pages/Register"));
 const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
@@ -25,7 +26,8 @@ function App() {
             <Suspense fallback={<Loader />}>
               <Layout>
                 <Routes>
-                  <Route path="/" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                  <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                  <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                   <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
                   <Route path="/admin" element={<PrivateRoute adminOnly={true}><Admin /></PrivateRoute>} />
                   <Route path="/login" element={<Login />} />
