@@ -17,6 +17,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/logo-180.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Mushaf Platform</title>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('theme');
+          document.documentElement.setAttribute(
+            'data-theme',
+            theme === 'dark' ? 'dark' : 'light'
+          );
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

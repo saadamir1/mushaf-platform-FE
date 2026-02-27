@@ -565,8 +565,195 @@
 .resend-link:hover { color: var(--primary-dark); }
 .resend-link:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.error-boundary { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; background-color: var(--bg-color); }
-.error-content { text-align: center; max-width: 500px; }
-.error-icon { font-size: 4rem; margin-bottom: 1rem; }
-.error-content h2 { color: var(--secondary-color); margin-bottom: 1rem; }
-.error-content p { color: var(--gray-color); margin-bottom: 2rem; }
+/* ============================================
+   ERROR BOUNDARY STYLES
+   ============================================ */
+
+/* Full-screen error overlay */
+.robust-error-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--bg-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: auto;
+}
+
+/* Error card container */
+.error-card {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+}
+
+/* Error icon */
+.error-icon {
+  font-size: 3rem;
+  line-height: 1;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Error heading */
+.error-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+  font-weight: 700;
+}
+
+/* Error description */
+.error-description {
+  margin: 0 0 1.5rem 0;
+  color: var(--gray-color);
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+/* Technical details section */
+.error-details {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: var(--bg-color);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.error-details summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.error-details pre {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+.error-details p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+.error-details strong {
+  color: var(--secondary-color);
+}
+
+/* Action buttons container */
+.error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.error-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  min-width: 120px;
+}
+
+.error-btn.primary {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 4px rgba(13, 115, 119, 0.3);
+}
+
+.error-btn.primary:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(13, 115, 119, 0.4);
+}
+
+.error-btn.secondary {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.error-btn.secondary:hover {
+  background-color: var(--light-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.error-btn.success {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.error-btn.success:hover {
+  background-color: #1e7e34;
+  transform: translateY(-1px);
+}
+
+.error-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Support text */
+.error-support {
+  font-size: 0.875rem;
+  color: var(--gray-color);
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .robust-error-boundary {
+    padding: 1rem;
+  }
+  
+  .error-card {
+    padding: 1.5rem;
+  }
+  
+  .error-title {
+    font-size: 1.25rem;
+  }
+  
+  .error-icon {
+    font-size: 2.5rem;
+  }
+  
+  .error-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .error-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+}
