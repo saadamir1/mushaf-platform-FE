@@ -24,7 +24,9 @@ export const AuthProvider = ({ children }) => {
       return response.data;
     } catch (err) {
       console.error('Failed to fetch user profile:', err);
-      tokenHelpers.clearTokens();
+      if (err.response?.status === 401) {
+        tokenHelpers.clearTokens();
+      }
       setUser(null);
       return null;
     }
