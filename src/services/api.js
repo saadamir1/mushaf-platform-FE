@@ -143,21 +143,25 @@ export const quranService = {
   searchVerses: (query) => api.get(`/quran/search/verses?q=${query}`),
   getJuz: () => api.get('/quran/juz'),
   getJuzById: (number) => api.get(`/quran/juz/${number}`),
+  getPageByNumber: (number) => api.get(`/quran/pages/${number}`),
+  getPageBySurah: (surahNumber) => api.get(`/quran/pages/surah/${surahNumber}`),
+  getPageByJuz: (juzNumber) => api.get(`/quran/pages/juz/${juzNumber}`),
+  searchTopics: (query) => api.get(`/topics/search?q=${query}`),
 };
 
 // Bookmark services
 export const bookmarkService = {
   getBookmarks: (page = 1, limit = 20) =>
     api.get(`/bookmarks?page=${page}&limit=${limit}`),
-  createBookmark: (verseId, note) =>
-    api.post('/bookmarks', { verseId, note }),
+  createBookmark: (pageNumber, note) =>
+    api.post('/bookmarks', { pageNumber, note }),
   deleteBookmark: (id) => api.delete(`/bookmarks/${id}`),
   updateNote: (id, note) =>
     api.patch(`/bookmarks/${id}/note`, { note }),
   getProgress: () => api.get('/bookmarks/progress'),
-  updateProgress: (verseId, surahNumber, pageNumber) =>
-    api.post('/bookmarks/progress', { verseId, surahNumber, pageNumber }),
-  getBookmarkedVerseIds: () => api.get('/bookmarks/verse-ids'),
+  updateProgress: (pageNumber) =>
+    api.post('/bookmarks/progress', { pageNumber }),
+  getBookmarkedPageNumbers: () => api.get('/bookmarks/page-numbers'),
 };
 
 export default api;

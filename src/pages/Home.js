@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { quranService } from '../services/api';
+import { quranService, bookmarkService } from '../services/api';
 import { SearchBar, EmptyState, SkeletonLoader, Button } from '../components/ui';
+import NavigationSidebar from '../components/NavigationSidebar';
 
 const Home = () => {
   const { user } = useAuth();
@@ -78,21 +79,31 @@ const Home = () => {
           description="Try searching with a different term"
         />
       ) : (
-        <div className="surah-grid">
-          {filteredSurahs.map(surah => (
-            <Link key={surah.id} to={`/surah/${surah.surahNumber}`} className="surah-card">
-              <div className="surah-number">{surah.surahNumber}</div>
-              <div className="surah-content">
-                <h3 className="surah-name">{surah.nameEnglish}</h3>
-                <p className="surah-arabic">{surah.nameArabic}</p>
-                <div className="surah-meta">
-                  <span className="meta-badge">📜 {surah.versesCount} verses</span>
-                  <span className="meta-badge revelation">{surah.revelationType}</span>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '2rem' }}>
+          <div className="surah-grid">
+            {filteredSurahs.map(surah => (
+              <Link key={surah.id} to={`/page/${surah.startPageNumber || 1}`} className="surah-card">
+                <div className="surah-number">{surah.surahNumber}</div>
+                <div className="surah-content">
+                  <h3 className="surah-name">{surah.nameEnglish}</h3>
+                  <p className="surah-arabic">{surah.nameArabic}</p>
+                  <div className="surah-meta">
+                    <span className="meta-badge">📜 {surah.versesCount} verses</span>
+                    <span className="meta-badge revelation">{surah.revelationType}</span>
+                    {surah.startPageNumber && (
+                      <span className="meta-badge" style={{ backgroundColor: 'var(--primary-color)', color: 'white' }}>
+                        Page {surah.startPageNumber}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="surah-arrow">→</div>
-            </Link>
-          ))}
+                <div className="surah-arrow">→</div>
+              </Link>
+            ))}
+          </div>
+          <div>
+            <NavigationSidebar />
+          </div>
         </div>
       )}
     </div>

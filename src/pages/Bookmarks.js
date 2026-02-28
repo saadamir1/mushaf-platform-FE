@@ -61,7 +61,7 @@ const Bookmarks = () => {
           <div key={bookmark.id} className="card" style={{ marginBottom: '1rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
               <div style={{ flex: 1 }}>
-                {/* Surah and Verse Info */}
+                {/* Page Info */}
                 <div style={{ marginBottom: '0.5rem' }}>
                   <span style={{
                     backgroundColor: 'var(--primary-color)',
@@ -71,28 +71,9 @@ const Bookmarks = () => {
                     fontSize: '0.875rem',
                     fontWeight: '600'
                   }}>
-                    {bookmark.verse?.surah?.name || `Surah ${bookmark.verse?.surahId}`} - Verse {bookmark.verse?.verseNumber}
+                    Page {bookmark.pageNumber}
                   </span>
                 </div>
-
-                {/* Arabic Text */}
-                {bookmark.verse?.textArabic && (
-                  <p style={{
-                    fontSize: '1.5rem',
-                    margin: '0.75rem 0',
-                    direction: 'rtl',
-                    fontFamily: '"Amiri", "Traditional Arabic", serif'
-                  }}>
-                    {bookmark.verse.textArabic}
-                  </p>
-                )}
-
-                {/* Urdu Translation */}
-                {bookmark.verse?.textUrdu && (
-                  <p style={{ margin: '0.5rem 0', color: 'var(--text-color)' }}>
-                    {bookmark.verse.textUrdu}
-                  </p>
-                )}
 
                 {/* Note */}
                 {bookmark.note && (
@@ -107,13 +88,13 @@ const Bookmarks = () => {
                   </p>
                 )}
 
-                {/* Read Link */}
+                {/* View Page Link */}
                 <Link
-                  to={`/surah/${bookmark.verse?.surahId || bookmark.verseId}`}
+                  to={`/page/${bookmark.pageNumber}`}
                   className="btn btn-outline-primary"
                   style={{ marginTop: '0.75rem', display: 'inline-block' }}
                 >
-                  📖 Read Full Chapter
+                  📖 View Page {bookmark.pageNumber}
                 </Link>
               </div>
 

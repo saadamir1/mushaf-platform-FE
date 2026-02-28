@@ -6,10 +6,11 @@ import PrivateRoute from "./components/PrivateRoute";
 import Layout from "./components/Layout";
 import Loader from "./components/Loader";
 import ErrorBoundary from "./components/ErrorBoundary";
+import './utils/errorHandler'; // Import error handler to ensure it's initialized
 
 const Home = React.lazy(() => import("./pages/Home"));
-const SurahReader = React.lazy(() => import("./pages/SurahReader"));
-const Search = React.lazy(() => import("./pages/Search"));
+const PageViewer = React.lazy(() => import("./pages/PageViewer"));
+const TopicSearch = React.lazy(() => import("./pages/TopicSearch"));
 const Bookmarks = React.lazy(() => import("./pages/Bookmarks"));
 const Login = React.lazy(() => import("./pages/Login"));
 const Register = React.lazy(() => import("./pages/Register"));
@@ -30,8 +31,8 @@ function App() {
               <Layout>
                 <Routes>
                   <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-                  <Route path="/surah/:number" element={<PrivateRoute><SurahReader /></PrivateRoute>} />
-                  <Route path="/search" element={<PrivateRoute><Search /></PrivateRoute>} />
+                  <Route path="/page/:pageNumber" element={<PrivateRoute><PageViewer /></PrivateRoute>} />
+                  <Route path="/topic-search" element={<PrivateRoute><TopicSearch /></PrivateRoute>} />
                   <Route path="/bookmarks" element={<PrivateRoute><Bookmarks /></PrivateRoute>} />
                   <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
                   <Route path="/admin" element={<PrivateRoute adminOnly={true}><Admin /></PrivateRoute>} />

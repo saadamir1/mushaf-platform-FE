@@ -81,12 +81,12 @@ const Navbar = () => {
                   <span className="nav-text">Quran</span>
                 </Link>
                 <Link
-                  to="/search"
-                  className={`nav-link ${isActive("/search") ? "active" : ""}`}
+                  to="/topic-search"
+                  className={`nav-link ${isActive("/topic-search") ? "active" : ""}`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <span className="nav-icon">🔍</span>
-                  <span className="nav-text">Search</span>
+                  <span className="nav-text">Topic Search</span>
                 </Link>
                 <Link
                   to="/bookmarks"

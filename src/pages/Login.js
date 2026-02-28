@@ -34,6 +34,7 @@ const Login = () => {
       storage.remove(STORAGE_KEYS.REMEMBERED_EMAIL);
     }
     const success = await login(formData.email, formData.password);
+
     setIsLoading(false);
     if (success) navigate("/");
   };

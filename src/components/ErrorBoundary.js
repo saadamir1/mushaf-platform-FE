@@ -167,9 +167,6 @@ class ErrorBoundary extends React.Component {
         });
     };
 
-    handleRefresh = () => window.location.reload();
-    handleGoHome = () => { window.location.href = '/'; };
-
     // ── Render ────────────────────────────────────────────────────────────────
 
     render() {
@@ -182,15 +179,15 @@ class ErrorBoundary extends React.Component {
                         <span className="error-icon">🚨</span>
                         <h2 className="error-title">Something went wrong</h2>
                         <p className="error-description">
-                            We apologize for the inconvenience. The application encountered an unexpected error.
+                            We apologize for the inconvenience. The Mushaf Platform encountered an unexpected error.
                         </p>
 
                         <div className="error-actions">
-                            <button onClick={this.handleRefresh} className="error-btn primary">
+                            <button
+                                onClick={() => window.location.reload()}
+                                className="error-btn primary"
+                            >
                                 🔄 Refresh Page
-                            </button>
-                            <button onClick={this.handleGoHome} className="error-btn secondary">
-                                🏠 Go Home
                             </button>
                         </div>
 
