@@ -380,12 +380,6 @@ netlify deploy --prod
 
 ---
 
-## 📄 License
-
-MIT License - See LICENSE file for details
-
----
-
 ## 👤 Developer
 
 **Saad Amir** - Backend & Frontend Engineer
