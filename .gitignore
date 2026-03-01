@@ -153,3 +153,6 @@ temp/
 *.njsproj
 *.sln
 *.sw?
+
+# Amazon Q memory bank
+.amazonq/rules/memory-bank/

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { quranService, bookmarkService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -24,6 +24,12 @@ const PageViewer = () => {
     const [jumpVal, setJumpVal] = useState(String(current));
     const [toast, setToast] = useState('');
 
+    const go = useCallback(p => {
+        const n = clamp(parseInt(p) || 1, 1, TOTAL_PAGES);
+        setZoom(100); setRotation(0);
+        navigate(`/page/${n}`);
+    }, [navigate]);
+
     useEffect(() => setJumpVal(String(current)), [current]);
 
     useEffect(() => {
@@ -34,7 +40,7 @@ const PageViewer = () => {
             .catch(() => { if (!cancelled) setError('Failed to load page.'); })
             .finally(() => { if (!cancelled) setLoading(false); });
         return () => { cancelled = true; };
-    }, [current, go]);
+    }, [current]);
 
     useEffect(() => {
         if (!user) return;
@@ -53,13 +59,7 @@ const PageViewer = () => {
         };
         window.addEventListener('keydown', h);
         return () => window.removeEventListener('keydown', h);
-    }, [current]);
-
-    const go = p => {
-        const n = clamp(parseInt(p) || 1, 1, TOTAL_PAGES);
-        setZoom(100); setRotation(0);
-        navigate(`/page/${n}`);
-    };
+    }, [current, go]);
 
     const showToast = msg => { setToast(msg); setTimeout(() => setToast(''), 2200); };
 
