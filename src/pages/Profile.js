@@ -7,8 +7,6 @@ const Profile = () => {
     const { user, refreshUser, logout } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState("");
-    const [error, setError] = useState("");
     const fileInputRef = useRef(null);
 
     // Separate states for each form
@@ -233,12 +231,6 @@ const Profile = () => {
                     </div>
                 </div>
 
-                {/* Global error/success for general messages */}
-                {(error || success) && (
-                    <div className={error ? "error-message" : "success-message"}>
-                        {error || success}
-                    </div>
-                )}
 
                 <div className="profile-form-section">
                     <h3>Edit Profile</h3>

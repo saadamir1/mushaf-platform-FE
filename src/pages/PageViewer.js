@@ -34,7 +34,7 @@ const PageViewer = () => {
             .catch(() => { if (!cancelled) setError('Failed to load page.'); })
             .finally(() => { if (!cancelled) setLoading(false); });
         return () => { cancelled = true; };
-    }, [current]);
+    }, [current, go]);
 
     useEffect(() => {
         if (!user) return;
