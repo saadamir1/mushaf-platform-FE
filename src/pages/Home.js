@@ -19,7 +19,7 @@ const Home = () => {
   const fetchSurahs = async () => {
     try {
       const response = await quranService.getSurahs();
-      setSurahs(response.data);
+      setSurahs(response.data || response);
     } catch (error) {
       console.error('Error fetching surahs:', error);
     } finally {
@@ -33,31 +33,6 @@ const Home = () => {
       surah.nameUrdu?.includes(searchQuery) ||
       surah.nameArabic?.includes(searchQuery)
   );
-
-  // ── Guest view ──
-  if (!user) {
-    return (
-      <div className="auth-container">
-        <div className="auth-card">
-          <div style={{ textAlign: 'center' }}>
-            <img src="/logo.png" alt="Mushaf Platform" className="auth-logo" />
-            <p
-              style={{
-                textAlign: 'center',
-                color: 'var(--gray-color)',
-                marginBottom: '2rem',
-              }}
-            >
-              Mushaf Platform — Digital Quran with Urdu Translation
-            </p>
-          </div>
-          <Button as={Link} to="/login" variant="primary" size="lg" fullWidth>
-            Login to Continue
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="home-container">
