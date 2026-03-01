@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_CONFIG, STORAGE_KEYS, storage } from '../utils';
+import { fetchWithCache, CACHE_KEYS, getCachedPage } from '../utils/quranCache';
 
 const API_URL = API_CONFIG.BASE_URL;
 
@@ -133,8 +134,6 @@ export const uploadService = {
 };
 
 // Quran services with caching
-import { fetchWithCache, CACHE_KEYS, getCachedPage } from '../utils/quranCache';
-
 export const quranService = {
   getSurahs: async () => {
     return fetchWithCache(CACHE_KEYS.SURAHS, () => api.get('/quran/surahs').then(r => r.data));
