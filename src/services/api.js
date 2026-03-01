@@ -132,18 +132,30 @@ export const uploadService = {
   },
 };
 
-// Quran services
+// Quran services with caching
+import { fetchWithCache, CACHE_KEYS, getCachedPage } from '../utils/quranCache';
+
 export const quranService = {
-  getSurahs: () => api.get('/quran/surahs'),
+  getSurahs: async () => {
+    return fetchWithCache(CACHE_KEYS.SURAHS, () => api.get('/quran/surahs').then(r => r.data));
+  },
   getSurah: (number) => api.get(`/quran/surahs/${number}`),
   getSurahVerses: (number, page = 1, limit = 50) =>
     api.get(`/quran/surahs/${number}/verses?page=${page}&limit=${limit}`),
   getVerses: (page = 1, limit = 20) =>
     api.get(`/quran/verses?page=${page}&limit=${limit}`),
   searchVerses: (query) => api.get(`/quran/search/verses?q=${query}`),
-  getJuz: () => api.get('/quran/juz'),
+  getJuz: async () => {
+    return fetchWithCache(CACHE_KEYS.JUZ, () => api.get('/quran/juz').then(r => r.data));
+  },
   getJuzById: (number) => api.get(`/quran/juz/${number}`),
-  getPageByNumber: (number) => api.get(`/quran/pages/${number}`),
+  getPageByNumber: async (number) => {
+    // Try cache first
+    const cached = getCachedPage(number);
+    if (cached) return { data: cached };
+    // Fetch from API
+    return api.get(`/quran/pages/${number}`);
+  },
   getPageBySurah: (surahNumber) => api.get(`/quran/pages/surah/${surahNumber}`),
   getPageByJuz: (juzNumber) => api.get(`/quran/pages/juz/${juzNumber}`),
   searchTopics: (query) => api.get(`/topics/search?q=${query}`),
