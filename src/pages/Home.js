@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { quranService } from '../services/api';
 import { SearchBar, EmptyState, SkeletonLoader } from '../components/ui';
 import QuranReader from '../components/QuranReader';
