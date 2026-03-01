@@ -191,22 +191,51 @@ const Navbar = () => {
             </>
           ) : (
             /* Guest links */
-            <div className="nav-links guest-links">
-              <Link
-                to="/login"
-                className={`nav-link ${isActive("/login") ? "active" : ""}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="btn btn-primary btn-sm"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Get Started
-              </Link>
-            </div>
+            <>
+              <nav className="nav-links">
+                <Link
+                  to="/"
+                  className={`nav-link ${isActive("/") ? "active" : ""}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="nav-icon">📖</span>
+                  <span className="nav-text">Quran</span>
+                </Link>
+                <Link
+                  to="/topic-search"
+                  className={`nav-link ${isActive("/topic-search") ? "active" : ""}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="nav-icon">🔍</span>
+                  <span className="nav-text">Topic Search</span>
+                </Link>
+              </nav>
+
+              <div className="navbar-actions guest-actions">
+                <button
+                  onClick={toggleTheme}
+                  className="theme-toggle"
+                  title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                  aria-label="Toggle theme"
+                >
+                  {isDark ? "☀️" : "🌙"}
+                </button>
+                <Link
+                  to="/login"
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="btn btn-primary btn-sm"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Get Started
+                </Link>
+              </div>
+            </>
           )}
         </div>
       </div>

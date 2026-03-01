@@ -143,3 +143,23 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--p
   h1 { font-size: 1.75rem; }
   h2 { font-size: 1.5rem; }
 }
+
+/* Guest navbar sign-in button styling */
+.sign-in-btn {
+  background-color: rgba(13, 115, 119, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: var(--transition);
+}
+
+.sign-in-btn:hover {
+  background-color: rgba(13, 115, 119, 0.2);
+}
+
+[data-theme="dark"] .sign-in-btn {
+  background-color: rgba(20, 160, 133, 0.15);
+}
+
+[data-theme="dark"] .sign-in-btn:hover {
+  background-color: rgba(20, 160, 133, 0.25);
+}
