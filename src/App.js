@@ -30,17 +30,26 @@ function App() {
             <Suspense fallback={<Loader />}>
               <Layout>
                 <Routes>
-                  <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-                  <Route path="/page/:pageNumber" element={<PrivateRoute><PageViewer /></PrivateRoute>} />
-                  <Route path="/topic-search" element={<PrivateRoute><TopicSearch /></PrivateRoute>} />
+                  {/* Public Quran Routes */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/page/:pageNumber" element={<PageViewer />} />
+                  <Route path="/topic-search" element={<TopicSearch />} />
+                  
+                  {/* Protected User Routes */}
                   <Route path="/bookmarks" element={<PrivateRoute><Bookmarks /></PrivateRoute>} />
                   <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                  
+                  {/* Admin Only */}
                   <Route path="/admin" element={<PrivateRoute adminOnly={true}><Admin /></PrivateRoute>} />
+                  
+                  {/* Auth Routes */}
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/reset-password" element={<ResetPassword />} />
                   <Route path="/verify-email" element={<VerifyEmail />} />
+                  
+                  {/* 404 */}
                   <Route path="/404" element={<NotFound />} />
                   <Route path="*" element={<Navigate to="/404" replace />} />
                 </Routes>
