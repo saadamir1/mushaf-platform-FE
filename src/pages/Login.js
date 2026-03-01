@@ -10,7 +10,6 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showResendVerification, setShowResendVerification] = useState(false);
   const [resendStatus, setResendStatus] = useState("");
   const [isResending, setIsResending] = useState(false);
   const { login, error, user } = useAuth();
@@ -59,7 +58,6 @@ const Login = () => {
                   try {
                     await authService.resendVerification(formData.email);
                     setResendStatus("Verification email sent! Please check your inbox.");
-                    setShowResendVerification(false);
                   } catch (err) {
                     setResendStatus("Failed to resend. Please try again.");
                   }
