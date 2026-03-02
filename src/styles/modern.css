@@ -587,10 +587,11 @@
 .qr2-progress-label{font-size:.68rem;color:var(--gray-color);text-align:right;padding:.18rem 1rem;background:var(--bg-color);border-bottom:1px solid var(--border-color);flex-shrink:0;letter-spacing:.02em}
 
 /* ── Stage wrapper ── */
-.qr2-stage-wrap{flex:1;min-height:0;position:relative}
+.qr2-stage-wrap{flex:1;min-height:0;position:relative;isolation:isolate}
 
 /* ── Scrollable stage ── */
-.qr2-stage{position:absolute;inset:0;overflow:auto;display:block;padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:var(--border-color) transparent;background-image:radial-gradient(circle at 1px 1px,var(--border-color) 1px,transparent 0);background-size:24px 24px}
+.qr2-stage{position:absolute;inset:0;overflow:auto;display:block;will-change:scroll-position;
+padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:var(--border-color) transparent;background-image:radial-gradient(circle at 1px 1px,var(--border-color) 1px,transparent 0);background-size:24px 24px}
 
 .qr2-img{display:block;max-width:100%;height:auto;width:auto;border-radius:4px;box-shadow:0 8px 32px rgba(0,0,0,.18);opacity:0;transform-origin:top center;transition:opacity .3s ease,transform .25s ease;margin:0 auto}
 .qr2-img.loaded{opacity:1}
@@ -609,7 +610,7 @@
    overflow, stacking context and parent transform issues.
    bottom:5rem sits above the bottom-nav bar on desktop.           */
 .qr2-zoom-fab{
-  position:fixed;
+  position:absolute;
   bottom:1rem;
   right:1rem;
   z-index:9990;
@@ -626,7 +627,6 @@
   pointer-events:none;
 }
 .qr2-zoom-fab.visible{opacity:1;pointer-events:auto}
-@media(min-width:769px){.qr2-zoom-fab{opacity:1;pointer-events:auto}}
 
 .qr2-zoom-btn{width:28px;height:28px;border:none;border-radius:50%;background:transparent;color:var(--text-color);font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1}
 .qr2-zoom-btn:hover:not(:disabled){background:var(--primary-color);color:#fff}
@@ -703,7 +703,7 @@
   .qr2-nav-btn{width:30px;height:30px}
   .qr2-progress-label{text-align:center;font-size:.7rem}
   .qr2-stage{padding:.75rem;background-image:none}
-  .qr2-zoom-fab{bottom:4.5rem;right:.75rem;padding:.2rem .45rem;gap:.1rem}
+  .qr2-zoom-fab{bottom:.75rem;right:.75rem;padding:.2rem .45rem;gap:.1rem}
   .qr2-zoom-btn{width:26px;height:26px;font-size:.9rem}
   .qr2-zoom-val{min-width:28px;font-size:.68rem}
   .qr2-zoom-divider{height:12px}
@@ -716,7 +716,7 @@
 @media(max-width:400px){
   .qr2-shell{height:calc(100vh - 110px);min-height:440px;border-radius:10px}
   .qr2-stage{padding:.5rem}
-  .qr2-zoom-fab{bottom:4rem;right:.5rem}
+  .qr2-zoom-fab{bottom:.5rem;right:.5rem}
   .qr2-bottom-btn{padding:.4rem .75rem;font-size:.78rem}
   .qr2-jump-input{width:36px}
   .qr2-jump-go{padding:.18rem .4rem;font-size:.7rem}
@@ -994,54 +994,4 @@
   .pv-back  { padding: .33rem .625rem; font-size: .8rem; }
   .pv-chip  { display: none; }
   .pv-zoom-val { display: none; }
-}/* ── Zoom FAB fix — anchors to .qr2-shell, NOT the scrollable stage ──
-   Paste this at the very END of modern.css to override the old rules.  */
-
-/* Shell must be the positioning context */
-.qr2-shell { position: relative; }
-
-/* FAB: fixed to bottom-right of the shell card, never scrolls */
-.qr2-zoom-fab {
-  position: absolute;      /* relative to .qr2-shell, not .qr2-stage */
-  bottom: 4rem;            /* sit above the bottom-nav bar (~3rem tall) */
-  right: 1rem;
-  z-index: 20;             /* above stage content */
-
-  display: flex;
-  align-items: center;
-  gap: .15rem;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 50px;
-  padding: .25rem .5rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,.15);
-
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity .2s ease, transform .2s ease;
-  pointer-events: none;
-}
-.qr2-zoom-fab.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-/* Always visible on desktop */
-@media (min-width: 769px) {
-  .qr2-zoom-fab {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-}
-
-/* Mobile: slightly smaller, same anchoring */
-@media (max-width: 768px) {
-  .qr2-zoom-fab {
-    bottom: 3.75rem;
-    right: .75rem;
-    padding: .2rem .4rem;
-    gap: .1rem;
-  }
 }
