@@ -690,7 +690,7 @@ padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:v
 
 /* ── Mobile (≤768px) ── */
 @media(max-width:768px){
-  .qr2-shell{height:calc(100vh - 130px);min-height:500px;border-radius:12px}
+  .qr2-shell{height:calc(100svh - 60px);min-height:500px;border-radius:12px}
   .qr2-topbar{flex-wrap:wrap;padding:.5rem .75rem;gap:.4rem;min-height:auto}
   .qr2-topbar-nav{order:1;flex:1}
   .qr2-surah-badge{display:none}
@@ -702,7 +702,8 @@ padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:v
   .qr2-jump-total,.qr2-jump-sep{display:none}
   .qr2-nav-btn{width:30px;height:30px}
   .qr2-progress-label{text-align:center;font-size:.7rem}
-  .qr2-stage{padding:.75rem;background-image:none}
+.qr2-stage{padding:0;background-image:none;background-color:var(--bg-color);overflow-y:hidden;overflow-x:auto;display:flex;align-items:flex-start;justify-content:center}
+.qr2-img{height:100%;width:auto;max-width:none;object-fit:contain;flex-shrink:0}
   .qr2-zoom-fab{bottom:.75rem;right:.75rem;padding:.2rem .45rem;gap:.1rem}
   .qr2-zoom-btn{width:26px;height:26px;font-size:.9rem}
   .qr2-zoom-val{min-width:28px;font-size:.68rem}
@@ -824,7 +825,7 @@ padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:v
 
 /* ── Mobile (≤768px) ── */
 @media(max-width:768px){
-  .pv2-shell{height:calc(100vh - 130px);min-height:500px;border-radius:12px}
+  .pv2-shell{height:calc(100svh - 60px);min-height:500px;border-radius:12px;margin-top:1rem}
   .pv2-topbar{flex-wrap:wrap;padding:.5rem .75rem;gap:.4rem;min-height:auto}
   .pv2-topbar-nav{order:1;flex:1}
   .pv2-meta-badge{display:none}
@@ -836,7 +837,8 @@ padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:v
   .pv2-jump-total,.pv2-jump-sep{display:none}
   .pv2-nav-btn{width:30px;height:30px}
   .pv2-progress-label{text-align:center;font-size:.7rem}
-  .pv2-stage{padding:.75rem;background-image:none}
+.pv2-stage{padding:0;background-image:none;background-color:var(--bg-color);overflow-y:hidden;overflow-x:auto;display:flex;align-items:flex-start;justify-content:center}
+.pv2-img{height:100%;width:auto;max-width:none;object-fit:contain;flex-shrink:0}
   .pv2-zoom-fab{bottom:.5rem;right:.5rem;padding:.2rem .4rem;gap:.1rem}
   .pv2-zoom-btn{width:26px;height:26px;font-size:.9rem}
   .pv2-zoom-val{min-width:28px;font-size:.68rem}
@@ -862,23 +864,11 @@ padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:v
    ================================================================ */
 
 /* ── Gap between navbar and reader shell on desktop ── */
-.pv2-shell{margin-top:1rem}
-.qr2-shell{margin-top:.5rem}
-
-/* ── Mobile: image should fill width properly, no empty space below ── */
-@media(max-width:768px){
-  /* Make stage use full height — no blank area under image */
-  .pv2-stage{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:.5rem}
-  .pv2-img{width:100%;max-width:100%;height:auto}
-
-  /* Same for QuranReader */
-  .qr2-stage{display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
-  .qr2-img{width:100%;max-width:100%;height:auto}
-
-  /* Shell should not have too much top margin on mobile */
-  .pv2-shell{margin-top:.5rem;height:calc(100vh - 120px)}
-  .qr2-shell{margin-top:0}
+@media(min-width:769px){
+  .pv2-shell{margin-top:1.5rem}
+  .qr2-shell{margin-top:.5rem}
 }
+
 
 
 
