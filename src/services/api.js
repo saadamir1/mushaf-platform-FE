@@ -152,8 +152,28 @@ export const quranService = {
     // Try cache first
     const cached = getCachedPage(number);
     if (cached) return { data: cached };
-    // Fetch from API
-    return api.get(`/quran/pages/${number}`);
+    
+    // Fetch from API and cache it
+    try {
+      const response = await api.get(`/quran/pages/${number}`);
+      // Cache this page for future
+      const cacheKey = `quran_page_${number}_cache`;
+      localStorage.setItem(cacheKey, JSON.stringify({
+        data: response.data,
+        timestamp: Date.now(),
+        version: 'v1'
+      }));
+      return response;
+    } catch (error) {
+      // If API fails, try individual page cache
+      const cacheKey = `quran_page_${number}_cache`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const { data } = JSON.parse(cached);
+        return { data };
+      }
+      throw error;
+    }
   },
   getPageBySurah: (surahNumber) => api.get(`/quran/pages/surah/${surahNumber}`),
   getPageByJuz: (juzNumber) => api.get(`/quran/pages/juz/${juzNumber}`),
