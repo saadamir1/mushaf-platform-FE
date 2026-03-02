@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_CONFIG, STORAGE_KEYS, storage } from '../utils';
 import { fetchWithCache, CACHE_KEYS, getCachedPage } from '../utils/quranCache';
-import { STATIC_SURAHS, STATIC_PAGES, STATIC_JUZ, getStaticPage } from '../data';
+import { STATIC_SURAHS, STATIC_JUZ, getStaticPage } from '../data';
 
 const API_URL = API_CONFIG.BASE_URL;
 
@@ -164,7 +164,7 @@ export const quranService = {
     // Try cache first
     const cached = getCachedPage(number);
     if (cached) return { data: cached };
-    
+
     // Try API
     try {
       const response = await api.get(`/quran/pages/${number}`);
@@ -184,14 +184,14 @@ export const quranService = {
         const { data } = JSON.parse(cachedPage);
         return { data };
       }
-      
+
       // Fallback to static data
       console.log(`Using static page ${number}`);
       const staticPage = getStaticPage(number);
       if (staticPage) {
         return { data: staticPage };
       }
-      
+
       throw error;
     }
   },
