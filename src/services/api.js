@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_CONFIG, STORAGE_KEYS, storage } from '../utils';
 import { fetchWithCache, CACHE_KEYS, getCachedPage } from '../utils/quranCache';
+import { STATIC_SURAHS, STATIC_PAGES, STATIC_JUZ, getStaticPage } from '../data';
 
 const API_URL = API_CONFIG.BASE_URL;
 
@@ -133,10 +134,16 @@ export const uploadService = {
   },
 };
 
-// Quran services with caching
+// Quran services with caching and static fallback
 export const quranService = {
   getSurahs: async () => {
-    return fetchWithCache(CACHE_KEYS.SURAHS, () => api.get('/quran/surahs').then(r => r.data));
+    try {
+      const surahs = await fetchWithCache(CACHE_KEYS.SURAHS, () => api.get('/quran/surahs').then(r => r.data));
+      return surahs;
+    } catch (error) {
+      console.log('Using static Surahs data');
+      return STATIC_SURAHS;
+    }
   },
   getSurah: (number) => api.get(`/quran/surahs/${number}`),
   getSurahVerses: (number, page = 1, limit = 50) =>
@@ -145,7 +152,12 @@ export const quranService = {
     api.get(`/quran/verses?page=${page}&limit=${limit}`),
   searchVerses: (query) => api.get(`/quran/search/verses?q=${query}`),
   getJuz: async () => {
-    return fetchWithCache(CACHE_KEYS.JUZ, () => api.get('/quran/juz').then(r => r.data));
+    try {
+      return await fetchWithCache(CACHE_KEYS.JUZ, () => api.get('/quran/juz').then(r => r.data));
+    } catch (error) {
+      console.log('Using static Juz data');
+      return STATIC_JUZ;
+    }
   },
   getJuzById: (number) => api.get(`/quran/juz/${number}`),
   getPageByNumber: async (number) => {
@@ -153,10 +165,10 @@ export const quranService = {
     const cached = getCachedPage(number);
     if (cached) return { data: cached };
     
-    // Fetch from API and cache it
+    // Try API
     try {
       const response = await api.get(`/quran/pages/${number}`);
-      // Cache this page for future
+      // Cache this page
       const cacheKey = `quran_page_${number}_cache`;
       localStorage.setItem(cacheKey, JSON.stringify({
         data: response.data,
@@ -165,13 +177,21 @@ export const quranService = {
       }));
       return response;
     } catch (error) {
-      // If API fails, try individual page cache
+      // Try individual page cache
       const cacheKey = `quran_page_${number}_cache`;
-      const cached = localStorage.getItem(cacheKey);
-      if (cached) {
-        const { data } = JSON.parse(cached);
+      const cachedPage = localStorage.getItem(cacheKey);
+      if (cachedPage) {
+        const { data } = JSON.parse(cachedPage);
         return { data };
       }
+      
+      // Fallback to static data
+      console.log(`Using static page ${number}`);
+      const staticPage = getStaticPage(number);
+      if (staticPage) {
+        return { data: staticPage };
+      }
+      
       throw error;
     }
   },
