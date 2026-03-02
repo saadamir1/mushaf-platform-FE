@@ -73,11 +73,10 @@ const PageViewer = () => {
     const showToast = msg => { setToast(msg); setTimeout(() => setToast(''), 2200); };
 
     const handleBookmark = async () => {
-        if (!user) { showToast('Please login to bookmark'); return; }
         try {
             if (isBookmarked) {
                 const res = await bookmarkService.getBookmarks(1, 200);
-                const bms = res.data?.data || res.data || [];
+                const bms = res.data?.data || (Array.isArray(res.data) ? res.data : []);
                 const bm = (Array.isArray(bms) ? bms : []).find(b => b.pageNumber === current);
                 if (bm) await bookmarkService.deleteBookmark(bm.id);
                 setIsBookmarked(false);
@@ -85,10 +84,16 @@ const PageViewer = () => {
             } else {
                 await bookmarkService.createBookmark(current, '');
                 setIsBookmarked(true);
-                showToast('✅ Page bookmarked!');
+                showToast('Bookmarked!');
             }
         } catch (err) {
-            showToast(err.response?.status === 409 ? 'Already bookmarked' : 'Bookmark failed');
+            if (err.response?.status === 401) {
+                showToast('Please login to add bookmarks');
+            } else if (err.response?.status === 409) {
+                showToast('Already bookmarked');
+            } else {
+                showToast('Action failed');
+            }
         }
     };
 

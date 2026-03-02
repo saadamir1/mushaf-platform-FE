@@ -153,7 +153,13 @@ const QuranReader = ({ surahs = [] }) => {
       setBookmarks(prev => prev.filter(b => b.id !== id));
       if (bm) setBkdPages(prev => { const s = new Set(prev); s.delete(bm.pageNumber); return s; });
       showToast('Bookmark deleted');
-    } catch { showToast('Failed to delete'); }
+    } catch (error) {
+      if (error.response?.status === 401) {
+        showToast('Please login to manage bookmarks');
+      } else {
+        showToast('Failed to delete');
+      }
+    }
   };
 
   const isBookmarked = bkdPages.has(page);

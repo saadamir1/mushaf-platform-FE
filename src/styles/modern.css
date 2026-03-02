@@ -819,7 +819,7 @@ padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:v
 .pv2-bottom-info{font:600 .85rem/1 inherit;color:var(--gray-color)}
 
 /* ── Toast ── */
-.pv2-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--secondary-color);color:#fff;padding:.6rem 1.5rem;border-radius:50px;font:500 .85rem/1 inherit;box-shadow:0 6px 24px rgba(0,0,0,.25);z-index:9999;pointer-events:none;white-space:nowrap;animation:pv2-toast-in .25s ease,pv2-toast-out .25s ease 2s forwards}
+.pv2-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--primary-color);color:#fff;padding:.6rem 1.5rem;border-radius:50px;font:500 .85rem/1 inherit;box-shadow:0 6px 24px rgba(0,0,0,.25);z-index:9999;pointer-events:none;white-space:nowrap;animation:pv2-toast-in .25s ease,pv2-toast-out .25s ease 2s forwards}
 @keyframes pv2-toast-in{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 @keyframes pv2-toast-out{to{opacity:0}}
 
