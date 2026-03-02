@@ -721,277 +721,177 @@ padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:v
   .qr2-jump-input{width:36px}
   .qr2-jump-go{padding:.18rem .4rem;font-size:.7rem}
 }
-/* =====================================================
-   PAGE VIEWER  — append to modern.css (after qr- rules)
-   Reuses all qr-* classes from quran-reader.css.
-      Only defines layout unique to the standalone route.
-   ===================================================== */
+/* ================================================================
+   PAGE VIEWER v2 — consistent with QuranReader v2 "Sacred Minimal"
+   Add this section to modern.css (replace all existing .pv- rules)
+   ================================================================ */
 
-/* ── Shell: full viewport below navbar ── */
-.pv-shell {
-  display: flex;
-  flex-direction: column;
-  /* viewport minus navbar (64px desktop / 60px mobile) + own padding */
-  height: calc(100vh - 64px);
-  padding: .875rem 0 .5rem;
-  gap: .5rem;
-  box-sizing: border-box;
-  overflow: hidden;           /* nothing spills out */
-}
+.pv2-shell{display:flex;flex-direction:column;background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.08);height:calc(100vh - 100px);min-height:600px;position:relative;user-select:none}
 
-/* ── Top bar ── */
-.pv-bar {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: .75rem;
-  padding: .6rem 1.25rem;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  flex-shrink: 0;
-}
+/* ── Top Bar ── */
+.pv2-topbar{display:flex;align-items:center;justify-content:space-between;padding:.625rem 1rem;background:var(--card-bg);border-bottom:1px solid var(--border-color);gap:.75rem;flex-shrink:0;min-height:52px;z-index:5}
+.pv2-topbar-nav{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
 
-.pv-bar-left  { display: flex; align-items: center; gap: .625rem; }
-.pv-bar-right { display: flex; align-items: center; gap: .5rem; justify-content: flex-end; }
+.pv2-back-btn{display:flex;align-items:center;gap:.3rem;padding:.3rem .65rem;border:1.5px solid var(--border-color);border-radius:8px;background:transparent;color:var(--gray-color);font:500 .78rem/1 inherit;cursor:pointer;transition:all .18s ease;text-decoration:none;white-space:nowrap}
+.pv2-back-btn:hover{border-color:var(--primary-color);color:var(--primary-color);background:rgba(13,115,119,.06)}
 
-/* Back button */
-.pv-back {
-  display: inline-flex;
-  align-items: center;
-  padding: .38rem .875rem;
-  border: 1.5px solid var(--border-color);
-  border-radius: 8px;
-  color: var(--text-color);
-  font: 500 .875rem/1 inherit;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: .2s;
-  flex-shrink: 0;
-}
-.pv-back:hover { border-color: var(--primary-color); color: var(--primary-color); background: rgba(13,115,119,.06); }
+.pv2-nav-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-color);border-radius:8px;background:var(--bg-color);color:var(--text-color);cursor:pointer;transition:all .18s ease;flex-shrink:0}
+.pv2-nav-btn:hover:not(:disabled){background:var(--primary-color);border-color:var(--primary-color);color:#fff;transform:scale(1.05)}
+.pv2-nav-btn:disabled{opacity:.3;cursor:not-allowed}
 
-/* Page info chips */
-.pv-page-info { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
-.pv-page-num  { font: 700 .95rem/1 inherit; color: var(--secondary-color); }
-.pv-chip {
-  padding: .2rem .6rem;
-  background: var(--light-color);
-  color: var(--gray-color);
-  border-radius: 6px;
-  font: 500 .75rem/1 inherit;
-}
-.pv-chip.accent { background: rgba(13,115,119,.1); color: var(--primary-color); }
+.pv2-page-jump{display:flex;align-items:center;gap:.3rem;background:var(--bg-color);border:1.5px solid var(--border-color);border-radius:8px;padding:.25rem .5rem}
+.pv2-jump-input{width:48px;border:none;background:transparent;color:var(--text-color);font:600 .9rem/1 inherit;text-align:center;padding:0;outline:none;-moz-appearance:textfield}
+.pv2-jump-input::-webkit-outer-spin-button,.pv2-jump-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.pv2-jump-sep{color:var(--border-color);font-size:.85rem}
+.pv2-jump-total{color:var(--gray-color);font-size:.78rem;font-weight:500}
+.pv2-jump-go{padding:.22rem .55rem;border:none;border-radius:5px;background:var(--primary-color);color:#fff;font:600 .75rem/1 inherit;cursor:pointer;transition:background .18s}
+.pv2-jump-go:hover{background:var(--primary-dark)}
 
-/* Center navigation */
-.pv-bar-nav { display: flex; align-items: center; gap: .4rem; justify-content: center; }
-.pv-nav-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 36px; height: 36px; padding: 0 .75rem;
-  border: 1.5px solid var(--border-color);
-  border-radius: 8px;
-  background: var(--card-bg); color: var(--text-color);
-  font: 600 1rem/1 inherit; cursor: pointer; transition: .2s;
-  white-space: nowrap;
-}
-.pv-nav-btn:hover:not(:disabled) { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
-.pv-nav-btn:disabled { opacity: .38; cursor: not-allowed; }
-.pv-nav-btn.wide { padding: 0 1.1rem; font-size: .88rem; }
+/* Center meta badge */
+.pv2-meta-badge{display:flex;align-items:center;gap:.35rem;flex:1;justify-content:center;min-width:0;flex-wrap:wrap}
+.pv2-chip{display:inline-flex;align-items:center;padding:.2rem .55rem;border-radius:20px;font:600 .72rem/1 inherit;background:rgba(13,115,119,.08);border:1px solid rgba(13,115,119,.15);color:var(--primary-color);white-space:nowrap}
+.pv2-chip.accent{background:var(--primary-color);color:#fff;border-color:var(--primary-color)}
 
-.pv-jump    { display: flex; align-items: center; gap: .35rem; }
-.pv-jump-in {
-  width: 62px; height: 34px;
-  padding: 0 .5rem; text-align: center;
-  border: 1.5px solid var(--border-color); border-radius: 7px;
-  background: var(--bg-color); color: var(--text-color);
-  font: .9rem/1 inherit;
-  transition: border-color .2s;
-}
-.pv-jump-in:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(13,115,119,.1); }
-.pv-jump-of { font-size: .8rem; color: var(--gray-color); }
-.pv-go {
-  height: 34px; padding: 0 .875rem;
-  border: none; border-radius: 7px;
-  background: var(--primary-color); color: #fff;
-  font: 600 .85rem/1 inherit; cursor: pointer; transition: .2s;
-}
-.pv-go:hover { background: var(--primary-dark); }
-
-/* Right tools */
-.pv-zoom-row {
-  display: flex; align-items: center; gap: .2rem;
-  background: var(--bg-color);
-  border: 1.5px solid var(--border-color);
-  border-radius: 8px; padding: .18rem .35rem;
-}
-.pv-tool {
-  width: 28px; height: 26px;
-  display: flex; align-items: center; justify-content: center;
-  border: none; border-radius: 5px;
-  background: transparent; color: var(--text-color);
-  font: 700 .78rem/1 monospace; cursor: pointer; transition: .15s;
-}
-.pv-tool:hover:not(:disabled) { background: var(--primary-color); color: #fff; }
-.pv-tool:disabled { opacity: .35; cursor: not-allowed; }
-/* Reset & rotate use normal font */
-.pv-tool:nth-last-child(-n+2) { font-family: inherit; font-size: .95rem; }
-.pv-zoom-val { font-size: .78rem; color: var(--gray-color); min-width: 36px; text-align: center; }
-
-.pv-bookmark-btn {
-  display: inline-flex; align-items: center; gap: .3rem;
-  padding: .38rem .875rem; height: 36px;
-  border: 1.5px solid var(--border-color); border-radius: 8px;
-  background: transparent; color: var(--gray-color);
-  font: 500 .83rem/1 inherit; cursor: pointer; white-space: nowrap; transition: .2s;
-}
-.pv-bookmark-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
-.pv-bookmark-btn.saved { border-color: var(--accent-color); color: var(--accent-color); background: rgba(252,163,17,.1); }
+/* Right actions */
+.pv2-topbar-actions{display:flex;align-items:center;gap:.35rem;flex-shrink:0}
+.pv2-action-btn{display:flex;align-items:center;gap:.3rem;padding:.3rem .65rem;border:1.5px solid var(--border-color);border-radius:8px;background:transparent;color:var(--gray-color);font:500 .78rem/1 inherit;cursor:pointer;transition:all .18s ease;white-space:nowrap}
+.pv2-action-btn:hover{border-color:var(--primary-color);color:var(--primary-color);background:rgba(13,115,119,.06)}
+.pv2-action-btn.bookmarked{border-color:var(--accent-color);color:var(--accent-color);background:rgba(252,163,17,.08)}
+.pv2-action-label{font-size:.75rem}
 
 /* ── Progress ── */
-.pv-progress-track {
-  height: 4px; border-radius: 2px;
-  background: var(--border-color);
-  overflow: hidden; flex-shrink: 0;
-}
-.pv-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-  transition: width .5s ease;
-  border-radius: 2px;
-}
-.pv-progress-label {
-  font-size: .72rem; color: var(--gray-color);
-  text-align: right; flex-shrink: 0;
-}
+.pv2-progress{height:3px;background:var(--border-color);flex-shrink:0}
+.pv2-progress-fill{height:100%;background:linear-gradient(90deg,var(--primary-color),var(--accent-color));transition:width .4s ease;border-radius:0 2px 2px 0}
+.pv2-progress-label{font-size:.68rem;color:var(--gray-color);text-align:right;padding:.18rem 1rem;background:var(--bg-color);border-bottom:1px solid var(--border-color);flex-shrink:0;letter-spacing:.02em}
 
-/* ── Reader card — takes ALL remaining height ── */
-.pv-card {
-  flex: 1;
-  min-height: 0;                /* CRITICAL: allows flex child to shrink */
-  display: flex;
-  flex-direction: column;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  overflow: hidden;
-}
+/* ── Stage wrapper ── */
+.pv2-stage-wrap{flex:1;min-height:0;position:relative}
 
-/* ── Viewport: fills card, image fits inside ── */
-.pv-viewport {
-  flex: 1;
-  min-height: 0;                /* CRITICAL */
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-color);
-  padding: 1rem;
-}
+/* ── Scrollable stage ── */
+.pv2-stage{position:absolute;inset:0;overflow:auto;display:block;padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:var(--border-color) transparent;background-image:radial-gradient(circle at 1px 1px,var(--border-color) 1px,transparent 0);background-size:24px 24px}
 
-/* THE KEY FIX:
-   The img uses max-width + max-height relative to the viewport.
-   At zoom=100% (scale 1) it fits completely — no scroll needed.
-   Zooming in (scale > 1) makes the image grow beyond viewport → scroll kicks in.
-*/
-.pv-img {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  border-radius: 6px;
-  box-shadow: 0 6px 24px rgba(0,0,0,.25);
-  opacity: 0;
-  /* transform (scale + rotate) applied inline */
-  transform-origin: center center;
-  transition: opacity .3s ease, transform .25s ease;
-}
-.pv-img.loaded { opacity: 1; }
+.pv2-img{display:block;max-width:100%;height:auto;width:auto;border-radius:4px;box-shadow:0 8px 32px rgba(0,0,0,.18);opacity:0;transform-origin:top center;transition:opacity .3s ease,transform .25s ease;margin:0 auto}
+.pv2-img.loaded{opacity:1}
+[data-theme="dark"] .pv2-img{filter:invert(1) hue-rotate(180deg);box-shadow:0 8px 32px rgba(0,0,0,.5)}
 
-/* Dark mode: white paper → readable on dark bg */
-[data-theme="dark"] .pv-img { filter: invert(1) hue-rotate(180deg); }
+.pv2-shimmer{position:absolute;inset:1.5rem;background:linear-gradient(90deg,var(--border-color) 25%,var(--light-color) 50%,var(--border-color) 75%);background-size:200% 100%;animation:pv2-shimmer 1.4s infinite;border-radius:8px}
+@keyframes pv2-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* Shimmer while loading */
-.pv-shimmer {
-  position: absolute; inset: 1rem;
-  background: linear-gradient(90deg, var(--border-color) 25%, var(--light-color) 50%, var(--border-color) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
-  border-radius: 6px;
-}
+.pv2-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;padding:3rem 2rem;color:var(--gray-color);font-size:.9rem;text-align:center;width:100%}
+.pv2-state-icon{font-size:2.5rem}
+.pv2-spinner{width:38px;height:38px;border:3px solid var(--border-color);border-top-color:var(--primary-color);border-radius:50%;animation:pv2-spin .8s linear infinite}
+@keyframes pv2-spin{to{transform:rotate(360deg)}}
+.pv2-retry-btn{padding:.5rem 1.25rem;border:1.5px solid var(--primary-color);border-radius:8px;background:transparent;color:var(--primary-color);font:600 .875rem/1 inherit;cursor:pointer;transition:all .18s}
+.pv2-retry-btn:hover{background:var(--primary-color);color:#fff}
 
-/* State (loading / error / empty) */
-.pv-state {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: .75rem; text-align: center;
-  color: var(--gray-color); font-size: .9rem;
-  width: 100%;
+/* ── Zoom FAB — position:absolute on wrapper, never scrolls ── */
+.pv2-zoom-fab{
+  position:absolute;
+  bottom:.75rem;
+  right:.75rem;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  gap:.2rem;
+  background:var(--card-bg);
+  border:1px solid var(--border-color);
+  border-radius:50px;
+  padding:.3rem .6rem;
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+  opacity:0;
+  transition:opacity .2s ease;
+  pointer-events:none;
 }
-.pv-state-icon { font-size: 2.5rem; line-height: 1; }
-.pv-spinner {
-  width: 36px; height: 36px;
-  border: 4px solid var(--border-color);
-  border-top-color: var(--primary-color);
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
-}
+.pv2-zoom-fab.visible{opacity:1;pointer-events:auto}
 
-/* ── Bottom navigation strip ── */
-.pv-bottom-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: .6rem 1.25rem;
-  border-top: 1px solid var(--border-color);
-  background: var(--card-bg);
-  flex-shrink: 0;
-  gap: .5rem;
-}
-.pv-bottom-label { font-size: .85rem; color: var(--gray-color); }
+.pv2-zoom-btn{width:28px;height:28px;border:none;border-radius:50%;background:transparent;color:var(--text-color);font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1}
+.pv2-zoom-btn:hover:not(:disabled){background:var(--primary-color);color:#fff}
+.pv2-zoom-btn:disabled{opacity:.3;cursor:not-allowed}
+.pv2-zoom-val{font-size:.72rem;color:var(--gray-color);min-width:34px;text-align:center;font-weight:600}
+.pv2-zoom-divider{width:1px;height:16px;background:var(--border-color);margin:0 .1rem}
 
-/* ── Hint ── */
-.pv-hint {
-  text-align: center; font-size: .72rem;
-  color: var(--gray-color); opacity: .6;
-  margin: 0; flex-shrink: 0;
-}
+/* ── Bottom Navigation ── */
+.pv2-bottom-nav{display:flex;align-items:center;justify-content:space-between;padding:.625rem 1rem;border-top:1px solid var(--border-color);background:var(--card-bg);flex-shrink:0;z-index:5}
+.pv2-bottom-btn{display:flex;align-items:center;gap:.4rem;padding:.5rem 1.25rem;border:1.5px solid var(--border-color);border-radius:8px;background:var(--bg-color);color:var(--text-color);font:600 .875rem/1 inherit;cursor:pointer;transition:all .18s ease}
+.pv2-bottom-btn:hover:not(:disabled){background:var(--primary-color);border-color:var(--primary-color);color:#fff}
+.pv2-bottom-btn:disabled{opacity:.3;cursor:not-allowed}
+.pv2-bottom-info{font:600 .85rem/1 inherit;color:var(--gray-color)}
 
 /* ── Toast ── */
-.pv-toast {
-  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
-  background: var(--secondary-color); color: #fff;
-  padding: .6rem 1.4rem; border-radius: 50px;
-  font: 500 .85rem/1 inherit;
-  box-shadow: 0 6px 20px rgba(0,0,0,.25);
-  z-index: 9999; pointer-events: none; white-space: nowrap;
-  animation: toastUp .25s ease, toastOut .25s ease 2s forwards;
-}
-@keyframes toastUp  { from{opacity:0;transform:translateX(-50%) translateY(10px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
-@keyframes toastOut { to { opacity: 0; } }
+.pv2-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--secondary-color);color:#fff;padding:.6rem 1.5rem;border-radius:50px;font:500 .85rem/1 inherit;box-shadow:0 6px 24px rgba(0,0,0,.25);z-index:9999;pointer-events:none;white-space:nowrap;animation:pv2-toast-in .25s ease,pv2-toast-out .25s ease 2s forwards}
+@keyframes pv2-toast-in{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes pv2-toast-out{to{opacity:0}}
 
+/* ── Mobile (≤768px) ── */
+@media(max-width:768px){
+  .pv2-shell{height:calc(100vh - 130px);min-height:500px;border-radius:12px}
+  .pv2-topbar{flex-wrap:wrap;padding:.5rem .75rem;gap:.4rem;min-height:auto}
+  .pv2-topbar-nav{order:1;flex:1}
+  .pv2-meta-badge{display:none}
+  .pv2-topbar-actions{order:2;flex-shrink:0}
+  .pv2-action-label{display:none}
+  .pv2-action-btn{padding:.3rem .5rem;font-size:1rem}
+  .pv2-page-jump{padding:.2rem .4rem;gap:.25rem}
+  .pv2-jump-input{width:40px;font-size:.85rem}
+  .pv2-jump-total,.pv2-jump-sep{display:none}
+  .pv2-nav-btn{width:30px;height:30px}
+  .pv2-progress-label{text-align:center;font-size:.7rem}
+  .pv2-stage{padding:.75rem;background-image:none}
+  .pv2-zoom-fab{bottom:.5rem;right:.5rem;padding:.2rem .4rem;gap:.1rem}
+  .pv2-zoom-btn{width:26px;height:26px;font-size:.9rem}
+  .pv2-zoom-val{min-width:28px;font-size:.68rem}
+  .pv2-zoom-divider{height:12px}
+  .pv2-bottom-nav{padding:.5rem .75rem}
+  .pv2-bottom-btn{padding:.45rem 1rem;font-size:.82rem}
+  .pv2-bottom-info{font-size:.8rem}
+  .pv2-back-btn span{display:none}
+}
+
+/* ── Very small phones (≤400px) ── */
+@media(max-width:400px){
+  .pv2-shell{height:calc(100vh - 110px);min-height:440px;border-radius:10px}
+  .pv2-stage{padding:.5rem}
+  .pv2-zoom-fab{bottom:.4rem;right:.4rem}
+  .pv2-bottom-btn{padding:.4rem .75rem;font-size:.78rem}
+  .pv2-jump-input{width:36px}
+  .pv2-jump-go{padding:.18rem .4rem;font-size:.7rem}
+}
 
 /* ================================================================
-   RESPONSIVE
+   PV2 + QR2 SPACING PATCH — append to end of modern.css
    ================================================================ */
-@media (max-width: 900px) {
-  .pv-bar { grid-template-columns: 1fr; gap: .5rem; }
-  .pv-bar-left  { justify-content: space-between; }
-  .pv-bar-nav   { justify-content: center; }
-  .pv-bar-right { justify-content: space-between; width: 100%; }
+
+/* ── Gap between navbar and reader shell on desktop ── */
+.pv2-shell{margin-top:1rem}
+.qr2-shell{margin-top:.5rem}
+
+/* ── Mobile: image should fill width properly, no empty space below ── */
+@media(max-width:768px){
+  /* Make stage use full height — no blank area under image */
+  .pv2-stage{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:.5rem}
+  .pv2-img{width:100%;max-width:100%;height:auto}
+
+  /* Same for QuranReader */
+  .qr2-stage{display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+  .qr2-img{width:100%;max-width:100%;height:auto}
+
+  /* Shell should not have too much top margin on mobile */
+  .pv2-shell{margin-top:.5rem;height:calc(100vh - 120px)}
+  .qr2-shell{margin-top:0}
 }
 
-@media (max-width: 768px) {
-  .pv-shell { height: calc(100vh - 60px); padding: .625rem 0 .375rem; }
-  .pv-bar   { padding: .5rem .875rem; border-radius: 10px; }
-  .pv-card  { border-radius: 10px; }
-  .pv-viewport { padding: .5rem; }
-  .pv-bottom-nav { padding: .5rem .875rem; }
-}
 
-@media (max-width: 480px) {
-  .pv-shell { padding: .4rem 0 .25rem; }
-  .pv-back  { padding: .33rem .625rem; font-size: .8rem; }
-  .pv-chip  { display: none; }
-  .pv-zoom-val { display: none; }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

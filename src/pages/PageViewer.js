@@ -10,7 +10,6 @@ const PageViewer = () => {
     const { pageNumber } = useParams();
     const navigate = useNavigate();
     const { user } = useAuth();
-    const imgBoxRef = useRef(null);
 
     const current = clamp(parseInt(pageNumber) || 1, 1, TOTAL_PAGES);
 
@@ -23,6 +22,15 @@ const PageViewer = () => {
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [jumpVal, setJumpVal] = useState(String(current));
     const [toast, setToast] = useState('');
+    const [showFab, setShowFab] = useState(true);
+    const fabTimer = useRef(null);
+
+    /* ── auto-hide FAB ── */
+    const resetFabTimer = () => {
+        setShowFab(true);
+        clearTimeout(fabTimer.current);
+        fabTimer.current = setTimeout(() => setShowFab(false), 4000);
+    };
 
     const go = useCallback(p => {
         const n = clamp(parseInt(p) || 1, 1, TOTAL_PAGES);
@@ -86,125 +94,129 @@ const PageViewer = () => {
     const progress = Math.round((current / TOTAL_PAGES) * 100);
 
     return (
-        <div className="pv-shell">
+        <div className="pv2-shell" onClick={resetFabTimer}>
 
-            {/* ══ TOP BAR ══ */}
-            <div className="pv-bar">
+            {/* ── Top Bar ── */}
+            <div className="pv2-topbar">
+                <div className="pv2-topbar-nav">
+                    <Link to="/" className="pv2-back-btn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                        Back
+                    </Link>
 
-                {/* Left: back + page info */}
-                <div className="pv-bar-left">
-                    <Link to="/" className="pv-back">← Back</Link>
-                    <div className="pv-page-info">
-                        <span className="pv-page-num">Page {current}</span>
-                        {pageData?.juzNumber && <span className="pv-chip">Juz {pageData.juzNumber}</span>}
-                        {pageData?.surahNumberStart && <span className="pv-chip accent">Surah {pageData.surahNumberStart} starts</span>}
-                    </div>
-                </div>
+                    <button className="pv2-nav-btn" onClick={() => go(current - 1)} disabled={current <= 1}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                    </button>
 
-                {/* Center: navigation */}
-                <div className="pv-bar-nav">
-                    <button className="pv-nav-btn" onClick={() => go(current - 1)} disabled={current <= 1}>‹</button>
-                    <div className="pv-jump">
+                    <div className="pv2-page-jump">
                         <input
-                            type="number" className="pv-jump-in"
+                            type="number" className="pv2-jump-input"
                             value={jumpVal} min={1} max={TOTAL_PAGES}
                             onChange={e => setJumpVal(e.target.value)}
                             onKeyDown={e => e.key === 'Enter' && go(jumpVal)}
-                            aria-label="Page number"
+                            onFocus={e => e.target.select()}
                         />
-                        <span className="pv-jump-of">/ {TOTAL_PAGES}</span>
-                        <button className="pv-go" onClick={() => go(jumpVal)}>Go</button>
+                        <span className="pv2-jump-sep">/</span>
+                        <span className="pv2-jump-total">{TOTAL_PAGES}</span>
+                        <button className="pv2-jump-go" onClick={() => go(jumpVal)}>Go</button>
                     </div>
-                    <button className="pv-nav-btn" onClick={() => go(current + 1)} disabled={current >= TOTAL_PAGES}>›</button>
+
+                    <button className="pv2-nav-btn" onClick={() => go(current + 1)} disabled={current >= TOTAL_PAGES}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                    </button>
                 </div>
 
-                {/* Right: tools */}
-                <div className="pv-bar-right">
-                    <div className="pv-zoom-row">
-                        <button className="pv-tool" onClick={() => setZoom(z => clamp(z - 10, 60, 200))} disabled={zoom <= 60} title="Zoom out">A−</button>
-                        <span className="pv-zoom-val">{zoom}%</span>
-                        <button className="pv-tool" onClick={() => setZoom(z => clamp(z + 10, 60, 200))} disabled={zoom >= 200} title="Zoom in">A+</button>
-                        <button className="pv-tool" onClick={() => { setZoom(100); setRotation(0); }} title="Reset">↺</button>
-                        <button className="pv-tool" onClick={() => setRotation(r => (r + 90) % 360)} title="Rotate">⟳</button>
-                    </div>
+                {/* Center: page meta */}
+                <div className="pv2-meta-badge">
+                    {pageData?.juzNumber && <span className="pv2-chip">Juz {pageData.juzNumber}</span>}
+                    <span className="pv2-chip accent">Page {current}</span>
+                    {pageData?.surahNumberStart && <span className="pv2-chip">Surah {pageData.surahNumberStart}</span>}
+                </div>
+
+                {/* Right: bookmark */}
+                <div className="pv2-topbar-actions">
                     <button
-                        className={`pv-bookmark-btn${isBookmarked ? ' saved' : ''}`}
+                        className={`pv2-action-btn${isBookmarked ? ' bookmarked' : ''}`}
                         onClick={handleBookmark}
                     >
-                        {isBookmarked ? '🔖 Saved' : '🏷️ Bookmark'}
+                        {isBookmarked ? '🔖' : '🏷️'}
+                        <span className="pv2-action-label">{isBookmarked ? 'Saved' : 'Save'}</span>
                     </button>
                 </div>
             </div>
 
-            {/* ══ PROGRESS ══ */}
-            <div className="pv-progress-track">
-                <div className="pv-progress-fill" style={{ width: `${progress}%` }} />
+            {/* ── Progress ── */}
+            <div className="pv2-progress">
+                <div className="pv2-progress-fill" style={{ width: `${progress}%` }} />
             </div>
-            <div className="pv-progress-label">{progress}% · Page {current} of {TOTAL_PAGES}</div>
+            <div className="pv2-progress-label">{progress}% · Page {current} of {TOTAL_PAGES}</div>
 
-            {/* ══ READER CARD ══ */}
-            <div className="pv-card">
+            {/* ── Stage Wrapper ── */}
+            <div className="pv2-stage-wrap">
 
-                {/* Image viewport */}
-                <div
-                    className="pv-viewport"
-                    ref={imgBoxRef}
-                    style={{ overflow: zoom > 100 || rotation % 180 !== 0 ? 'auto' : 'hidden' }}
-                >
+                {/* Scrollable stage */}
+                <div className="pv2-stage">
                     {loading && (
-                        <div className="pv-state">
-                            <div className="pv-spinner" />
+                        <div className="pv2-state">
+                            <div className="pv2-spinner" />
                             <span>Loading page {current}…</span>
                         </div>
                     )}
-
                     {error && !loading && (
-                        <div className="pv-state">
-                            <span className="pv-state-icon">⚠️</span>
+                        <div className="pv2-state">
+                            <span className="pv2-state-icon">⚠️</span>
                             <p>{error}</p>
-                            <button className="pv-nav-btn" style={{ padding: '.4rem 1rem' }} onClick={() => navigate(0)}>Retry</button>
+                            <button className="pv2-retry-btn" onClick={() => navigate(0)}>Retry</button>
                         </div>
                     )}
-
                     {!loading && !error && pageData?.imageUrl && (
                         <>
-                            {!imgLoaded && <div className="pv-shimmer" />}
+                            {!imgLoaded && <div className="pv2-shimmer" />}
                             <img
                                 src={pageData.imageUrl}
                                 alt={`Quran page ${current}`}
-                                className={`pv-img${imgLoaded ? ' loaded' : ''}`}
-                                style={{
-                                    transform: `scale(${zoom / 100}) rotate(${rotation}deg)`,
-                                    transformOrigin: 'center center',
-                                    transition: 'transform .25s ease',
-                                }}
+                                className={`pv2-img${imgLoaded ? ' loaded' : ''}`}
+                                style={{ transform: `scale(${zoom / 100}) rotate(${rotation}deg)` }}
                                 onLoad={() => setImgLoaded(true)}
                                 onError={() => { setImgLoaded(true); setError('Image failed to load.'); }}
                                 draggable={false}
                             />
                         </>
                     )}
-
                     {!loading && !error && !pageData?.imageUrl && (
-                        <div className="pv-state">
-                            <span className="pv-state-icon">📄</span>
+                        <div className="pv2-state">
+                            <span className="pv2-state-icon">📄</span>
                             <p>No image for page {current}.</p>
                         </div>
                     )}
                 </div>
 
-                {/* Bottom nav strip */}
-                <div className="pv-bottom-nav">
-                    <button className="pv-nav-btn wide" onClick={() => go(current - 1)} disabled={current <= 1}>‹ Previous</button>
-                    <span className="pv-bottom-label">Page {current} of {TOTAL_PAGES}</span>
-                    <button className="pv-nav-btn wide" onClick={() => go(current + 1)} disabled={current >= TOTAL_PAGES}>Next ›</button>
+                {/* Zoom FAB — sibling of stage, never scrolls */}
+                <div className={`pv2-zoom-fab${showFab ? ' visible' : ''}`}>
+                    <button className="pv2-zoom-btn" onClick={() => setZoom(z => clamp(z - 10, 60, 200))} disabled={zoom <= 60}>−</button>
+                    <span className="pv2-zoom-val">{zoom}%</span>
+                    <button className="pv2-zoom-btn" onClick={() => setZoom(z => clamp(z + 10, 60, 200))} disabled={zoom >= 200}>+</button>
+                    <div className="pv2-zoom-divider" />
+                    <button className="pv2-zoom-btn" onClick={() => { setZoom(100); setRotation(0); }}>↺</button>
+                    <button className="pv2-zoom-btn" onClick={() => setRotation(r => (r + 90) % 360)}>⟳</button>
                 </div>
 
             </div>
 
-            <p className="pv-hint">💡 Arrow keys navigate · A− / A+ to zoom</p>
+            {/* ── Bottom Nav ── */}
+            <div className="pv2-bottom-nav">
+                <button className="pv2-bottom-btn" onClick={() => go(current - 1)} disabled={current <= 1}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                    Prev
+                </button>
+                <span className="pv2-bottom-info">Page {current}</span>
+                <button className="pv2-bottom-btn" onClick={() => go(current + 1)} disabled={current >= TOTAL_PAGES}>
+                    Next
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </button>
+            </div>
 
-            {toast && <div className="pv-toast">{toast}</div>}
+            {toast && <div className="pv2-toast">{toast}</div>}
         </div>
     );
 };
