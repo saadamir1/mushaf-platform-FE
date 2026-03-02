@@ -36,7 +36,7 @@ export const QURAN = {
   TOTAL_SURAHS: 114,
   TOTAL_VERSES: 6236,
   TOTAL_JUZ: 30,
-  TOTAL_PAGES: 604,
+  TOTAL_PAGES: 1027,
 };
 
 // User Roles

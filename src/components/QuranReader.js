@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { quranService, bookmarkService } from '../services/api';
 
-const TOTAL_PAGES = 604;
+const TOTAL_PAGES = 1027;
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 // ── Sidebar panels ────────────────────────────────────────────

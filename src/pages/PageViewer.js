@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { quranService, bookmarkService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
-const TOTAL_PAGES = 604;
+const TOTAL_PAGES = 1027;
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const PageViewer = () => {
