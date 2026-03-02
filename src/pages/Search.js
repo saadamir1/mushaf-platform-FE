@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FiSearch } from 'react-icons/fi';
 import { quranService } from '../services/api';
 
 const Search = () => {
@@ -23,7 +24,7 @@ const Search = () => {
 
   return (
     <div className="home-container">
-      <h2>🔍 Search Quran</h2>
+      <h2><FiSearch size={24} /> Search Quran</h2>
       <form onSubmit={handleSearch} style={{ marginBottom: '2rem' }}>
         <input
           type="text"

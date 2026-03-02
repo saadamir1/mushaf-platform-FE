@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { FiBookmark, FiBook } from 'react-icons/fi';
 import { quranService, bookmarkService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -89,7 +90,7 @@ const SurahReader = () => {
                   border: isBookmarked ? 'none' : '1px solid var(--primary-color)'
                 }}
               >
-                {isBookmarked ? '🔖' : '📑'}
+                {isBookmarked ? <FiBookmark size={20} /> : <FiBook size={20} />}
               </button>
             </div>
             <p style={{ fontSize: '1.8rem', textAlign: 'right', margin: '1rem 0', lineHeight: '2.5' }}>{verse.textArabic}</p>

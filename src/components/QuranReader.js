@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { FiBookmark, FiBook } from 'react-icons/fi';
 import { quranService, bookmarkService } from '../services/api';
 
 const TOTAL_PAGES = 1027;
@@ -41,7 +42,7 @@ const BookmarkDrawer = ({ bookmarks, onGoTo, onDelete, onClose }) => (
       </div>
       {bookmarks.length === 0 ? (
         <div className="qr2-drawer-empty">
-          <div className="qr2-empty-icon">🏷️</div>
+          <div className="qr2-empty-icon"><FiBookmark size={24} /></div>
           <p>No bookmarks yet</p>
           <small>Tap the bookmark button to save your place</small>
         </div>
@@ -189,7 +190,7 @@ const QuranReader = ({ surahs = [] }) => {
 
         <div className="qr2-topbar-actions">
           <button className={`qr2-action-btn${isBookmarked ? ' bookmarked' : ''}`} onClick={toggleBookmark}>
-            {isBookmarked ? '🔖' : '🏷️'}
+            {isBookmarked ? <FiBookmark size={20} /> : <FiBook size={20} />}
             <span className="qr2-action-label">{isBookmarked ? 'Saved' : 'Save'}</span>
           </button>
           <button className="qr2-action-btn" onClick={() => setDrawer('bookmarks')}>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FiBookmark, FiTrash2, FiEdit, FiBook } from 'react-icons/fi';
 import { bookmarkService } from '../services/api';
 
 const Bookmarks = () => {
@@ -39,7 +40,7 @@ const Bookmarks = () => {
 
   return (
     <div className="home-container">
-      <h2>🔖 My Bookmarks</h2>
+      <h2><FiBookmark size={24} /> My Bookmarks</h2>
 
       {progress && (
         <div className="card" style={{ marginBottom: '2rem', textAlign: 'center' }}>
@@ -51,7 +52,7 @@ const Bookmarks = () => {
 
       {bookmarks.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">🔖</div>
+          <div className="empty-icon"><FiBookmark size={24} /></div>
           <h3>No Bookmarks Yet</h3>
           <p>Start reading the Quran and bookmark your favorite verses!</p>
           <Link to="/" className="btn btn-primary">Start Reading</Link>
@@ -84,7 +85,7 @@ const Bookmarks = () => {
                     borderRadius: '4px',
                     fontStyle: 'italic'
                   }}>
-                    📝 {bookmark.note}
+                    <FiEdit size={16} /> {bookmark.note}
                   </p>
                 )}
 
@@ -94,7 +95,7 @@ const Bookmarks = () => {
                   className="btn btn-outline-primary"
                   style={{ marginTop: '0.75rem', display: 'inline-block' }}
                 >
-                  📖 View Page {bookmark.pageNumber}
+                  <FiBook size={16} /> View Page {bookmark.pageNumber}
                 </Link>
               </div>
 
@@ -104,7 +105,7 @@ const Bookmarks = () => {
                 style={{ padding: '0.5rem 1rem', marginLeft: '1rem' }}
                 title="Delete bookmark"
               >
-                🗑️
+                <FiTrash2 size={16} />
               </button>
             </div>
           </div>

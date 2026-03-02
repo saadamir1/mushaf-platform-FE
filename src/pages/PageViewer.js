@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { FiBookmark, FiBook } from 'react-icons/fi';
 import { quranService, bookmarkService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -139,7 +140,7 @@ const PageViewer = () => {
                         className={`pv2-action-btn${isBookmarked ? ' bookmarked' : ''}`}
                         onClick={handleBookmark}
                     >
-                        {isBookmarked ? '🔖' : '🏷️'}
+                        {isBookmarked ? <FiBookmark size={20} /> : <FiBook size={20} />}
                         <span className="pv2-action-label">{isBookmarked ? 'Saved' : 'Save'}</span>
                     </button>
                 </div>

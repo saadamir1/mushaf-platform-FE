@@ -1,17 +1,20 @@
 import React from 'react';
+import { FiSearch } from 'react-icons/fi';
 
-const EmptyState = ({ 
-  icon = '🔍', 
-  title = 'No Results Found', 
-  description = 'Try adjusting your search',
-  action 
+const EmptyState = ({
+  icon = <FiSearch className="empty-icon-svg" />,
+  title = 'No Results Found',
+  description = 'Try adjusting your search or filters.',
+  action = null
 }) => {
   return (
     <div className="empty-state">
-      <div className="empty-icon">{icon}</div>
+      <div className="empty-icon">
+        {typeof icon === 'string' ? icon : icon}
+      </div>
       <h3>{title}</h3>
       <p>{description}</p>
-      {action && <div style={{ marginTop: '1rem' }}>{action}</div>}
+      {action && <div className="empty-actions">{action}</div>}
     </div>
   );
 };

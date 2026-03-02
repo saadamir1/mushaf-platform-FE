@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { quranService } from '../services/api';
 import { SearchBar, EmptyState, SkeletonLoader } from '../components/ui';
 import QuranReader from '../components/QuranReader';
+import { FiBook, FiSearch } from 'react-icons/fi';
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('surahs');
@@ -53,14 +54,14 @@ const Home = () => {
           className={`home-tab-btn${activeTab === 'surahs' ? ' active' : ''}`}
           onClick={() => setActiveTab('surahs')}
         >
-          <span className="tab-icon">📖</span>
+          <span className="tab-icon"><FiBook size={18} /></span>
           <span>Surahs</span>
         </button>
         <button
           className={`home-tab-btn${activeTab === 'reader' ? ' active' : ''}`}
           onClick={() => setActiveTab('reader')}
         >
-          <span className="tab-icon">🕌</span>
+          <span className="tab-icon"><FiSearch size={18} /></span>
           <span>Quran Reader</span>
         </button>
       </div>
@@ -79,7 +80,7 @@ const Home = () => {
             <SkeletonLoader count={6} type="surah" />
           ) : filteredSurahs.length === 0 ? (
             <EmptyState
-              icon="🔍"
+              icon={<FiSearch className="empty-icon-svg" />}
               title="No Surahs Found"
               description="Try searching with a different term"
             />

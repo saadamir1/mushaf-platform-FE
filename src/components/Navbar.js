@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
+import { FiBook, FiSearch, FiBookmark, FiSun, FiMoon, FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
 
 const Navbar = () => {
   const { user, logout, isAdmin } = useAuth();
@@ -77,7 +78,7 @@ const Navbar = () => {
                   className={`nav-link ${isActive("/") ? "active" : ""}`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <span className="nav-icon">📖</span>
+                  <span className="nav-icon"><FiBook size={18} /></span>
                   <span className="nav-text">Quran</span>
                 </Link>
                 <Link
@@ -85,7 +86,7 @@ const Navbar = () => {
                   className={`nav-link ${isActive("/topic-search") ? "active" : ""}`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <span className="nav-icon">🔍</span>
+                  <span className="nav-icon"><FiSearch size={18} /></span>
                   <span className="nav-text">Topic Search</span>
                 </Link>
                 <Link
@@ -93,7 +94,7 @@ const Navbar = () => {
                   className={`nav-link ${isActive("/bookmarks") ? "active" : ""}`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <span className="nav-icon">🔖</span>
+                  <span className="nav-icon"><FiBookmark size={18} /></span>
                   <span className="nav-text">Bookmarks</span>
                 </Link>
               </nav>
@@ -107,7 +108,7 @@ const Navbar = () => {
                   title={isDark ? "Switch to light mode" : "Switch to dark mode"}
                   aria-label="Toggle theme"
                 >
-                  {isDark ? "☀️" : "🌙"}
+                  {isDark ? <FiSun size={18} /> : <FiMoon size={18} />}
                 </button>
 
                 {/* User dropdown */}
@@ -157,7 +158,7 @@ const Navbar = () => {
                           setMobileMenuOpen(false);
                         }}
                       >
-                        <span>👤</span>
+                        <span><FiUser size={16} /></span>
                         My Profile
                       </Link>
 
@@ -171,7 +172,7 @@ const Navbar = () => {
                             setMobileMenuOpen(false);
                           }}
                         >
-                          <span>⚙️</span>
+                          <span><FiSettings size={16} /></span>
                           Admin Panel
                         </Link>
                       )}
@@ -181,7 +182,7 @@ const Navbar = () => {
                         className="dropdown-item logout"
                         role="menuitem"
                       >
-                        <span>🚪</span>
+                        <span><FiLogOut size={16} /></span>
                         Logout
                       </button>
                     </div>
@@ -198,7 +199,7 @@ const Navbar = () => {
                   className={`nav-link ${isActive("/") ? "active" : ""}`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <span className="nav-icon">📖</span>
+                  <span className="nav-icon"><FiBook size={18} /></span>
                   <span className="nav-text">Quran</span>
                 </Link>
                 <Link
@@ -206,7 +207,7 @@ const Navbar = () => {
                   className={`nav-link ${isActive("/topic-search") ? "active" : ""}`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <span className="nav-icon">🔍</span>
+                  <span className="nav-icon"><FiSearch size={18} /></span>
                   <span className="nav-text">Topic Search</span>
                 </Link>
               </nav>
@@ -218,7 +219,7 @@ const Navbar = () => {
                   title={isDark ? "Switch to light mode" : "Switch to dark mode"}
                   aria-label="Toggle theme"
                 >
-                  {isDark ? "☀️" : "🌙"}
+                  {isDark ? <FiSun size={18} /> : <FiMoon size={18} />}
                 </button>
                 <Link
                   to="/login"
