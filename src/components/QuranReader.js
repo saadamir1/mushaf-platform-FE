@@ -137,7 +137,13 @@ const QuranReader = ({ surahs = [] }) => {
         setBkdPages(prev => new Set([...prev, page]));
         showToast('Bookmarked!');
       }
-    } catch { showToast('Action failed'); }
+    } catch (error) {
+      if (error.response?.status === 401) {
+        showToast('Please login to add bookmarks');
+      } else {
+        showToast('Action failed');
+      }
+    }
   };
 
   const deleteBm = async id => {
