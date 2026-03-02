@@ -87,7 +87,11 @@ const PageViewer = () => {
                 showToast('Bookmarked!');
             }
         } catch (err) {
-            if (err.response?.status === 401) {
+            // Check for 401 status in different possible locations due to API interceptor
+            const status = err.response?.status || err.status || err.code;
+            const message = err.response?.data?.message || err.message || '';
+
+            if (status === 401 || message.toLowerCase().includes('unauthorized') || message.toLowerCase().includes('token')) {
                 showToast('Please login to add bookmarks');
             } else if (err.response?.status === 409) {
                 showToast('Already bookmarked');

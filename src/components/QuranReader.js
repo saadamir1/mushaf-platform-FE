@@ -138,7 +138,9 @@ const QuranReader = ({ surahs = [] }) => {
         showToast('Bookmarked!');
       }
     } catch (error) {
-      if (error.response?.status === 401) {
+      // Check for 401 status in different possible locations
+      const status = error.response?.status || error.status;
+      if (status === 401) {
         showToast('Please login to add bookmarks');
       } else {
         showToast('Action failed');
