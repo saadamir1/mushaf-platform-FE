@@ -177,7 +177,7 @@ const Register = () => {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="Min 8 chars, uppercase, lowercase, number"
+                                placeholder="Min 8 characters"
                                 required
                                 minLength={8}
                             />
