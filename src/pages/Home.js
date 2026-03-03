@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { quranService } from '../services/api';
 import { SearchBar, EmptyState, SkeletonLoader } from '../components/ui';
 import QuranReader from '../components/QuranReader';
-import { FiBook, FiSearch } from 'react-icons/fi';
+import { FiBook, FiSearch, FiFileText } from 'react-icons/fi';
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('surahs');
@@ -94,11 +94,13 @@ const Home = () => {
                 >
                   <div className="surah-number">{surah.surahNumber}</div>
                   <div className="surah-content">
-                    <h3 className="surah-name">{surah.nameEnglish}</h3>
-                    <p className="surah-arabic">{surah.nameArabic}</p>
+                    <div className="surah-name-row">
+                      <h3 className="surah-name">{surah.nameEnglish}</h3>
+                      <p className="surah-arabic">{surah.nameArabic}</p>
+                    </div>
                     <div className="surah-meta">
                       <span className="meta-badge">
-                        📜 {surah.versesCount} verses
+                        <FiFileText size={14} style={{ marginRight: '4px' }} /> {surah.versesCount} verses
                       </span>
                       <span className="meta-badge revelation">
                         {surah.revelationType}

@@ -77,90 +77,30 @@
 /* ============================================
    3. SURAH GRID & CARDS
    ============================================ */
-.surah-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-}
-
-.surah-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  background-color: var(--card-bg);
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-/* Animated left accent bar */
-.surah-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0;
-  width: 4px; height: 100%;
-  background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
-  transform: scaleY(0);
-  transition: transform 0.3s ease;
-}
-.surah-card:hover {
-  border-color: var(--primary-color);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(13, 115, 119, 0.15);
-}
-.surah-card:hover::before { transform: scaleY(1); }
-
-/* Numbered badge */
-.surah-number {
-  flex-shrink: 0;
-  width: 48px; height: 48px;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: white;
-  border-radius: 10px;
-  font-weight: 700; font-size: 1.125rem;
-}
-
-.surah-content   { flex: 1; min-width: 0; }
-.surah-name      { margin: 0 0 0.5rem; font-size: 1.125rem; color: var(--secondary-color); }
-.surah-arabic    { margin: 0 0 0.75rem; font-size: 1.25rem; color: var(--text-color); font-weight: 500; line-height: 1.6; }
-.surah-arrow     { flex-shrink: 0; font-size: 1.5rem; color: var(--primary-color); transition: transform 0.3s ease; align-self: center; }
-.surah-card:hover .surah-arrow { transform: translateX(4px); }
-
-/* Meta badges (verses count, revelation type) */
-.surah-meta  { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.meta-badge  {
-  display: inline-flex; align-items: center; gap: 0.25rem;
-  padding: 0.25rem 0.75rem;
-  background-color: var(--light-color); color: var(--gray-color);
-  border-radius: 6px; font-size: 0.875rem;
-}
-.meta-badge.revelation {
-  background-color: rgba(13, 115, 119, 0.1);
-  color: var(--primary-color); font-weight: 500;
-}
-
-/* Skeleton loading state */
-.surah-card.skeleton { pointer-events: none; animation: pulse 1.5s ease-in-out infinite; }
-.skeleton-line {
-  height: 20px;
-  background: linear-gradient(90deg, var(--border-color) 25%, var(--light-color) 50%, var(--border-color) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 4px; margin-bottom: 0.5rem;
-}
-.skeleton-line.short { width: 60%; }
-@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-/* Empty / no-results state */
-.empty-state { text-align: center; padding: 4rem 2rem; }
-.empty-icon  { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
-.empty-state h3 { color: var(--secondary-color); margin-bottom: 0.5rem; }
-.empty-state p  { color: var(--gray-color); }
-
+.surah-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.surah-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1rem;padding:1rem 1.25rem;background-color:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;text-decoration:none;color:inherit;transition:all .25s ease;position:relative;overflow:hidden;min-height:88px}
+.surah-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--primary-color) 0%,var(--accent-color) 100%);transform:scaleY(0);transition:transform .25s ease;border-radius:0 2px 2px 0}
+.surah-card:hover{border-color:var(--primary-color);box-shadow:0 0 0 1px var(--primary-color),0 6px 28px rgba(13,115,119,.22);transform:translateY(-2px)}
+.surah-card:hover::before{transform:scaleY(1)}
+.surah-card:active{transform:translateY(0);box-shadow:none}
+.surah-number{flex-shrink:0;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));color:#fff;border-radius:10px;font-weight:700;font-size:1rem;letter-spacing:-.01em;align-self:center}
+.surah-content{min-width:0;display:flex;flex-direction:column;gap:.15rem}
+.surah-name-row{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;min-width:0}
+.surah-name{margin:0;font-size:.95rem;font-weight:700;color:var(--secondary-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em;flex-shrink:1}
+.surah-arabic{margin:0;font-size:1rem;color:var(--primary-color);font-weight:600;line-height:1.4;direction:rtl;white-space:nowrap;flex-shrink:0}
+.surah-meta{display:flex;gap:.35rem;flex-wrap:nowrap;align-items:center;margin-top:.35rem;overflow:hidden}
+.meta-badge{display:inline-flex;align-items:center;gap:.2rem;padding:.18rem .55rem;background:rgba(255,255,255,.04);color:var(--gray-color);border:1px solid var(--border-color);border-radius:20px;font-size:.72rem;font-weight:500;white-space:nowrap;flex-shrink:0}
+.meta-badge.revelation{background:rgba(13,115,119,.1);color:var(--primary-color);border-color:rgba(13,115,119,.25);font-weight:600}
+.meta-badge--page{background:rgba(13,115,119,.08)!important;color:var(--primary-color)!important;border-color:rgba(13,115,119,.2)!important;font-weight:600}
+.surah-arrow{flex-shrink:0;font-size:1rem;color:rgba(255,255,255,.25);transition:color .25s ease,transform .25s ease;align-self:center;line-height:1}
+.surah-card:hover .surah-arrow{color:var(--primary-color);transform:translateX(4px)}
+.skeleton-line{height:13px;background:linear-gradient(90deg,var(--border-color) 25%,var(--light-color) 50%,var(--border-color) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:20px;margin-bottom:.5rem}
+.skeleton-line.short{width:55%}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.empty-state{text-align:center;padding:5rem 2rem}
+.empty-icon,.empty-icon-svg{font-size:3rem;opacity:.35;margin-bottom:1rem}
+.empty-state h3{color:var(--secondary-color);font-size:1.05rem;margin-bottom:.35rem}
+.empty-state p{color:var(--gray-color);font-size:.88rem}
 
 /* ============================================
    4. AUTH PAGES (Login / Register)
