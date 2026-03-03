@@ -14,32 +14,20 @@
 /* ============================================
    1. HOME PAGE LAYOUT
    ============================================ */
-.home-container { padding: 2rem 0; }
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 2rem;
-  gap: 2rem;
-}
-.page-header h1 { margin: 0; font-size: 2rem; color: var(--secondary-color); }
-.subtitle { color: var(--gray-color); margin: 0.5rem 0 0; font-size: 1rem; }
-
-/* Stats badge (top-right of header) */
-.stats-badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(13, 115, 119, 0.2);
-}
-.stat-number { font-size: 2rem; font-weight: 700; line-height: 1; }
-.stat-label  { font-size: 0.875rem; opacity: 0.9; margin-top: 0.25rem; }
-
+.home-container{padding:2rem 0}
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;gap:1rem}
+.page-header h1{margin:0;font-size:1.85rem;font-weight:700;color:var(--secondary-color);line-height:1.2}
+.subtitle{color:var(--gray-color);margin:.35rem 0 0;font-size:.9rem}
+.stats-badge{display:inline-flex;flex-direction:row;align-items:center;gap:.4rem;background:rgba(13,115,119,.1);border:1px solid rgba(13,115,119,.25);color:var(--primary-color);padding:.4rem .85rem;border-radius:20px;flex-shrink:0}
+.stat-number{font-size:.95rem;font-weight:700;line-height:1}
+.stat-label{font-size:.85rem;font-weight:500;opacity:.85}
+.home-tabs{display:flex;border-bottom:1px solid var(--border-color);margin-bottom:1.5rem}
+.home-tab-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.7rem 1.5rem;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--gray-color);font:600 .95rem/1 inherit;cursor:pointer;margin-bottom:-1px;transition:color .2s,border-color .2s}
+.home-tab-btn:hover{color:var(--primary-color)}
+.home-tab-btn.active{color:var(--primary-color);border-bottom-color:var(--primary-color)}
+.tab-icon{display:flex;align-items:center}
+.tab-content{padding-top:1rem;animation:tabIn .2s ease}
+@keyframes tabIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
 /* ============================================
    2. SEARCH BAR
@@ -73,7 +61,6 @@
   box-shadow: 0 0 0 4px rgba(13, 115, 119, 0.1);
 }
 
-
 /* ============================================
    3. SURAH GRID & CARDS
    ============================================ */
@@ -88,7 +75,7 @@
 .surah-name-row{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;min-width:0}
 .surah-name{margin:0;font-size:.95rem;font-weight:700;color:var(--secondary-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em;flex-shrink:1}
 .surah-arabic{margin:0;font-size:1rem;color:var(--primary-color);font-weight:600;line-height:1.4;direction:rtl;white-space:nowrap;flex-shrink:0}
-.surah-meta{display:flex;gap:.35rem;flex-wrap:nowrap;align-items:center;margin-top:.35rem;overflow:hidden}
+.surah-meta{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center;margin-top:.35rem}
 .meta-badge{display:inline-flex;align-items:center;gap:.2rem;padding:.18rem .55rem;background:rgba(255,255,255,.04);color:var(--gray-color);border:1px solid var(--border-color);border-radius:20px;font-size:.72rem;font-weight:500;white-space:nowrap;flex-shrink:0}
 .meta-badge.revelation{background:rgba(13,115,119,.1);color:var(--primary-color);border-color:rgba(13,115,119,.25);font-weight:600}
 .meta-badge--page{background:rgba(13,115,119,.08)!important;color:var(--primary-color)!important;border-color:rgba(13,115,119,.2)!important;font-weight:600}
@@ -320,22 +307,24 @@
   .guest-actions .btn { flex: 1; text-align: center; justify-content: center; }
   .dropdown-menu { position: absolute; top: calc(100% + .5rem); right: 0; min-width: 240px; max-width: calc(100vw - 2rem); }
 
-
   /* Home page mobile tweaks */
-  .home-container { padding: 1rem 0; }
-  .page-header    { flex-direction: column; gap: 1rem; }
-  .page-header h1 { font-size: 1.5rem; }
-  .stats-badge    { align-self: flex-start; padding: 0.75rem 1.25rem; }
-  .stat-number    { font-size: 1.5rem; }
-  .surah-grid     { grid-template-columns: 1fr; gap: 1rem; }
-  .surah-card     { padding: 1rem; }
-  .surah-number   { width: 40px; height: 40px; font-size: 1rem; }
-  .surah-name     { font-size: 1rem; }
-  .surah-arabic   { font-size: 1.125rem; }
-  .search-input   { padding: 0.875rem 0.875rem 0.875rem 2.75rem; font-size: 0.95rem; }
-  .search-icon    { left: 0.875rem; font-size: 1.125rem; }
-  .auth-card.modern { padding: 2rem 1.5rem; }
-  .auth-icon      { font-size: 2.5rem; }
+  .home-container{padding: 2rem 0 1rem;}
+  .page-header{flex-direction:row;align-items:center;margin-bottom:1.25rem}
+  .page-header h1{font-size:1.4rem}
+  .subtitle{font-size:.82rem}
+  .stats-badge{padding:.35rem .7rem}
+  .stat-number{font-size:.85rem}
+  .stat-label{font-size:.78rem}
+  .surah-grid{grid-template-columns:1fr;gap:.75rem}
+  .surah-card{padding:.85rem 1rem;min-height:unset}
+  .surah-number{width:40px;height:40px;font-size:.9rem;border-radius:8px}
+  .surah-name{font-size:.9rem}
+  .surah-arabic{font-size:.95rem}
+  .surah-meta{flex-wrap:wrap}
+  .search-input{padding:.875rem .875rem .875rem 2.75rem;font-size:.95rem}
+  .search-icon{left:.875rem;font-size:1.125rem}
+  .auth-card.modern{padding:2rem 1.5rem}
+  .auth-icon{font-size:2.5rem}
 }
 
 
@@ -468,26 +457,6 @@
   .error-actions { flex-direction: column; align-items: center; gap: 0.75rem; }
   .error-btn   { width: 100%; max-width: 280px; }
 }
-
-/* =====================================================
-   HOME TABS  — append to modern.css
-   ===================================================== */
-.home-tabs { display:flex; border-bottom:2px solid var(--border-color); margin-bottom:2rem; }
-.home-tab-btn {
-  display:inline-flex; align-items:center; gap:.45rem;
-  padding:.7rem 1.5rem; border:none; border-bottom:3px solid transparent;
-  background:transparent; color:var(--gray-color);
-  font:600 .95rem/1 inherit; cursor:pointer;
-  margin-bottom:-2px; transition:color .2s,border-color .2s;
-}
-.home-tab-btn:hover  { color:var(--primary-color); }
-.home-tab-btn.active { color:var(--primary-color); border-bottom-color:var(--primary-color); }
-.tab-content { animation:tabIn .2s ease; }
-@keyframes tabIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
-
-/* Page badge on surah cards */
-.meta-badge--page { background:rgba(13,115,119,.12)!important; color:var(--primary-color)!important; font-weight:600; }
-
 
 /* ================================================================
    QURAN READER v2 — "Sacred Minimal"
