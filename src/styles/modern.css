@@ -124,10 +124,10 @@
   font-weight: 700; font-size: 1.125rem;
 }
 
-.surah-content   { flex: 1; }
+.surah-content   { flex: 1; min-width: 0; }
 .surah-name      { margin: 0 0 0.5rem; font-size: 1.125rem; color: var(--secondary-color); }
-.surah-arabic    { margin: 0 0 0.75rem; font-size: 1.25rem; color: var(--text-color); font-weight: 500; }
-.surah-arrow     { flex-shrink: 0; font-size: 1.5rem; color: var(--primary-color); transition: transform 0.3s ease; }
+.surah-arabic    { margin: 0 0 0.75rem; font-size: 1.25rem; color: var(--text-color); font-weight: 500; line-height: 1.6; }
+.surah-arrow     { flex-shrink: 0; font-size: 1.5rem; color: var(--primary-color); transition: transform 0.3s ease; align-self: center; }
 .surah-card:hover .surah-arrow { transform: translateX(4px); }
 
 /* Meta badges (verses count, revelation type) */
