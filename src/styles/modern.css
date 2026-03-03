@@ -130,6 +130,10 @@
   transition:background-color 5000s ease-in-out 0s;
 }
 
+.auth-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
+.auth-form .form-row .form-group{margin-bottom:0}
+.auth-form .form-group{margin-bottom:1rem}
+
 /* Password wrapper */
 .password-wrapper{position:relative;display:flex;align-items:center}
 .password-wrapper input{flex:1;padding-right:2.75rem}
