@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/ui";
 import { STORAGE_KEYS, storage } from "../utils";
@@ -12,8 +12,10 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [resendStatus, setResendStatus] = useState("");
   const [isResending, setIsResending] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const { login, error, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (user) navigate("/");
@@ -22,7 +24,20 @@ const Login = () => {
       setFormData((prev) => ({ ...prev, email: savedEmail }));
       setRememberMe(true);
     }
-  }, [user, navigate]);
+    
+    // Check for success message from registration
+    if (location.state?.message) {
+      setSuccessMessage(location.state.message);
+      if (location.state.email) {
+        setFormData((prev) => ({ ...prev, email: location.state.email }));
+      }
+      // Clear the state
+      window.history.replaceState({}, document.title);
+      
+      // Auto-clear success message after 8 seconds
+      setTimeout(() => setSuccessMessage(""), 8000);
+    }
+  }, [user, navigate, location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +59,8 @@ const Login = () => {
         <img src="/logo.png" alt="Mushaf Platform" className="auth-logo" />
         <h2>Welcome Back</h2>
         <p className="auth-subtitle">Sign in to continue your Quran journey</p>
+
+        {successMessage && <div className="success-message">{successMessage}</div>}
 
         {error && (
           <div className="error-message">

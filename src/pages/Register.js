@@ -15,9 +15,6 @@ const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [validationError, setValidationError] = useState("");
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [resendStatus, setResendStatus] = useState("");
-    const [isResending, setIsResending] = useState(false);
     const { register, error, user } = useAuth();
     const navigate = useNavigate();
 
@@ -60,7 +57,13 @@ const Register = () => {
         setIsLoading(false);
 
         if (success) {
-            setShowSuccess(true);
+            // Redirect to login with success message
+            navigate('/login', { 
+                state: { 
+                    message: 'Registration successful! Please sign in with your credentials.',
+                    email: formData.email 
+                } 
+            });
         }
     };
 
@@ -68,51 +71,6 @@ const Register = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         if (validationError) setValidationError("");
     };
-
-    // Show success message instead of form
-    if (showSuccess) {
-        return (
-            <div className="auth-container">
-                <div className="auth-card modern">
-                    <div className="auth-icon">✓</div>
-                    <h2>Registration Successful!</h2>
-                    <p className="auth-subtitle">
-                        Please check your email to verify your account before logging in.
-                    </p>
-
-                    {resendStatus && <div className="success-message">{resendStatus}</div>}
-
-                    <div className="resend-section">
-                        <p className="resend-text">Didn't receive the verification email?</p>
-                        <button
-                            className="btn btn-outline"
-                            onClick={async () => {
-                                setIsResending(true);
-                                setResendStatus("");
-                                try {
-                                    await authService.resendVerification(formData.email);
-                                    setResendStatus("Verification email sent! Please check your inbox.");
-                                } catch (err) {
-                                    setResendStatus("Failed to resend. Please try again.");
-                                }
-                                setIsResending(false);
-                            }}
-                            disabled={isResending}
-                        >
-                            {isResending ? "Sending..." : "Resend Verification Email"}
-                        </button>
-                    </div>
-
-                    <div className="auth-footer">
-                        <p>
-                            Already verified?{" "}
-                            <Link to="/login" className="auth-link">Sign in</Link>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="auth-container">
