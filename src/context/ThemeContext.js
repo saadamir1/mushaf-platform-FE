@@ -6,7 +6,7 @@ const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(() => {
     const saved = storage.get(STORAGE_KEYS.THEME);
-    return saved ? saved === 'dark' : false;
+    return saved ? saved === 'dark' : true; // Default to dark mode
   });
 
   useEffect(() => {

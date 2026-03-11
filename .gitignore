@@ -156,3 +156,7 @@ temp/
 
 # Amazon Q memory bank
 .amazonq/rules/memory-bank/
+
+.env.production
+.env.local
+.env.*.local
