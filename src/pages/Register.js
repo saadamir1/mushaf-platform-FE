@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/ui";
-import { authService } from "../services/api";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -58,11 +57,11 @@ const Register = () => {
 
         if (success) {
             // Redirect to login with success message
-            navigate('/login', { 
-                state: { 
+            navigate('/login', {
+                state: {
                     message: 'Registration successful! Please sign in with your credentials.',
-                    email: formData.email 
-                } 
+                    email: formData.email
+                }
             });
         }
     };
