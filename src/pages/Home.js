@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { quranService } from '../services/api';
 import { SearchBar, EmptyState, SkeletonLoader } from '../components/ui';
+import { useDebounce } from '../utils';
 import QuranReader from '../components/QuranReader';
 import { FiBook, FiSearch, FiFileText } from 'react-icons/fi';
 
@@ -10,6 +11,7 @@ const Home = () => {
   const [surahs, setSurahs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   useEffect(() => {
     fetchSurahs();
@@ -28,9 +30,9 @@ const Home = () => {
 
   const filteredSurahs = surahs.filter(
     (surah) =>
-      surah.nameEnglish?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      surah.nameUrdu?.includes(searchQuery) ||
-      surah.nameArabic?.includes(searchQuery)
+      surah.nameEnglish?.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+      surah.nameUrdu?.includes(debouncedSearchQuery) ||
+      surah.nameArabic?.includes(debouncedSearchQuery)
   );
 
   return (
