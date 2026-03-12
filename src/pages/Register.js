@@ -47,10 +47,14 @@ const Register = () => {
         if (!validateForm()) return;
 
         setIsLoading(true);
+
+        // Normalize email to lowercase for case-insensitive registration
+        const normalizedEmail = formData.email.toLowerCase().trim();
+
         const success = await register({
             firstName: formData.firstName,
             lastName: formData.lastName,
-            email: formData.email,
+            email: normalizedEmail,
             password: formData.password,
         });
         setIsLoading(false);
@@ -60,7 +64,7 @@ const Register = () => {
             navigate('/login', {
                 state: {
                     message: 'Registration successful! Please sign in with your credentials.',
-                    email: formData.email
+                    email: normalizedEmail
                 }
             });
         }

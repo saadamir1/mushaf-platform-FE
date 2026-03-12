@@ -70,14 +70,33 @@ api.interceptors.response.use(
 
 // Auth services
 export const authService = {
-  login: (email, password) => api.post('/auth/login', { email, password }),
-  register: (userData) => api.post('/auth/register', userData),
+  login: (email, password) => {
+    // Normalize email to lowercase for case-insensitive login
+    const normalizedEmail = email.toLowerCase().trim();
+    return api.post('/auth/login', { email: normalizedEmail, password });
+  },
+  register: (userData) => {
+    // Normalize email to lowercase for case-insensitive registration
+    const normalizedUserData = {
+      ...userData,
+      email: userData.email.toLowerCase().trim()
+    };
+    return api.post('/auth/register', normalizedUserData);
+  },
   getProfile: () => api.get('/auth/me'),
   refreshToken: (refreshToken) => api.post('/auth/refresh', { refreshToken }),
-  forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
+  forgotPassword: (email) => {
+    // Normalize email to lowercase for case-insensitive password reset
+    const normalizedEmail = email.toLowerCase().trim();
+    return api.post('/auth/forgot-password', { email: normalizedEmail });
+  },
   resetPassword: (token, newPassword) => api.post('/auth/reset-password', { token, newPassword }),
   verifyEmail: (token) => api.post('/auth/verify-email', { token }),
-  resendVerification: (email) => api.post('/auth/send-verification', { email }),
+  resendVerification: (email) => {
+    // Normalize email to lowercase for case-insensitive resend
+    const normalizedEmail = email.toLowerCase().trim();
+    return api.post('/auth/send-verification', { email: normalizedEmail });
+  },
 };
 
 // User services

@@ -24,7 +24,7 @@ const Login = () => {
       setFormData((prev) => ({ ...prev, email: savedEmail }));
       setRememberMe(true);
     }
-    
+
     // Check for success message from registration
     if (location.state?.message) {
       setSuccessMessage(location.state.message);
@@ -33,7 +33,7 @@ const Login = () => {
       }
       // Clear the state
       window.history.replaceState({}, document.title);
-      
+
       // Auto-clear success message after 8 seconds
       setTimeout(() => setSuccessMessage(""), 8000);
     }
@@ -42,12 +42,16 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    // Normalize email to lowercase for case-insensitive login
+    const normalizedEmail = formData.email.toLowerCase().trim();
+
     if (rememberMe) {
-      storage.set(STORAGE_KEYS.REMEMBERED_EMAIL, formData.email);
+      storage.set(STORAGE_KEYS.REMEMBERED_EMAIL, normalizedEmail);
     } else {
       storage.remove(STORAGE_KEYS.REMEMBERED_EMAIL);
     }
-    const success = await login(formData.email, formData.password);
+    const success = await login(normalizedEmail, formData.password);
 
     setIsLoading(false);
     if (success) navigate("/");

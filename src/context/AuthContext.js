@@ -53,7 +53,10 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       setLoading(true);
 
-      const response = await authService.login(email, password);
+      // Normalize email to lowercase for case-insensitive login
+      const normalizedEmail = email.toLowerCase().trim();
+
+      const response = await authService.login(normalizedEmail, password);
       const { access_token, refresh_token } = response.data;
 
       tokenHelpers.setTokens(access_token, refresh_token);
