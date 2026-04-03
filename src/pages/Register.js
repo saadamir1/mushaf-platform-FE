@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/ui";
+import { UI, VALIDATION } from "../utils/constants";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -26,15 +27,15 @@ const Register = () => {
             setValidationError("Passwords do not match");
             return false;
         }
-        if (formData.password.length < 8) {
-            setValidationError("Password must be at least 8 characters long");
+        if (formData.password.length < UI.MIN_PASSWORD_LENGTH) {
+            setValidationError(`Password must be at least ${UI.MIN_PASSWORD_LENGTH} characters long`);
             return false;
         }
-        if (formData.password.length > 32) {
-            setValidationError("Password must not exceed 32 characters");
+        if (formData.password.length > UI.MAX_PASSWORD_LENGTH) {
+            setValidationError(`Password must not exceed ${UI.MAX_PASSWORD_LENGTH} characters`);
             return false;
         }
-        if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
+        if (!VALIDATION.PASSWORD_REGEX.test(formData.password)) {
             setValidationError("Password must contain uppercase, lowercase, and number");
             return false;
         }
@@ -138,9 +139,10 @@ const Register = () => {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="Min 8 characters"
+                                placeholder={`Min ${UI.MIN_PASSWORD_LENGTH} characters`}
                                 required
-                                minLength={8}
+                                minLength={UI.MIN_PASSWORD_LENGTH}
+                                maxLength={UI.MAX_PASSWORD_LENGTH}
                             />
                             <button
                                 type="button"

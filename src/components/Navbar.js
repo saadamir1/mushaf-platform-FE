@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { FiBook, FiSearch, FiBookmark, FiSun, FiMoon, FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
+import { ARIA_LABELS } from '../utils/constants';
 
 const Navbar = () => {
   const { user, logout, isAdmin } = useAuth();
@@ -106,9 +107,9 @@ const Navbar = () => {
                   onClick={toggleTheme}
                   className="theme-toggle"
                   title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-                  aria-label="Toggle theme"
+                  aria-label={ARIA_LABELS.THEME_SWITCH}
                 >
-                  {isDark ? <FiSun size={18} /> : <FiMoon size={18} />}
+                  {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
                 </button>
 
                 {/* User dropdown */}
@@ -217,9 +218,9 @@ const Navbar = () => {
                   onClick={toggleTheme}
                   className="theme-toggle"
                   title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-                  aria-label="Toggle theme"
+                  aria-label={ARIA_LABELS.THEME_SWITCH}
                 >
-                  {isDark ? <FiSun size={18} /> : <FiMoon size={18} />}
+                  {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
                 </button>
                 <Link
                   to="/login"

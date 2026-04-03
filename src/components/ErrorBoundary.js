@@ -167,6 +167,10 @@ class ErrorBoundary extends React.Component {
         });
     };
 
+    handleRefresh = () => {
+        window.location.reload();
+    };
+
     // ── Render ────────────────────────────────────────────────────────────────
 
     render() {
@@ -184,7 +188,7 @@ class ErrorBoundary extends React.Component {
 
                         <div className="error-actions">
                             <button
-                                onClick={() => window.location.reload()}
+                                onClick={this.handleRefresh}
                                 className="error-btn primary"
                             >
                                 🔄 Refresh Page
