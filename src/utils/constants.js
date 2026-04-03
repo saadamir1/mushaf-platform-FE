@@ -29,6 +29,9 @@ export const UI = {
   ITEMS_PER_PAGE: 20,
   DEBOUNCE_DELAY: 300,
   TOAST_DURATION: 5000,
+  PAGE_TRANSITION_DURATION: 300,
+  MAX_PASSWORD_LENGTH: 32,
+  MIN_PASSWORD_LENGTH: 8,
 };
 
 // Quran Constants
@@ -62,4 +65,24 @@ export const SUCCESS_MESSAGES = {
   BOOKMARK_ADDED: 'Bookmark added successfully.',
   BOOKMARK_REMOVED: 'Bookmark removed successfully.',
   PROFILE_UPDATED: 'Profile updated successfully.',
+};
+
+// Input Validation
+export const VALIDATION = {
+  EMAIL_REGEX: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  PASSWORD_REGEX: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+  MAX_INPUT_LENGTH: 100,
+  MAX_NOTE_LENGTH: 500,
+};
+
+// Accessibility
+export const ARIA_LABELS = {
+  SEARCH: 'Search Surahs',
+  BOOKMARK: 'Bookmark Page',
+  PREVIOUS_PAGE: 'Previous Page',
+  NEXT_PAGE: 'Next Page',
+  ZOOM_IN: 'Zoom In',
+  ZOOM_OUT: 'Zoom Out',
+  ROTATE: 'Rotate Page',
+  THEME_SWITCH: 'Toggle Theme',
 };

@@ -153,9 +153,44 @@ export const uploadService = {
   },
 };
 
+// Enhanced error handling wrapper
+const withErrorHandling = (apiCall) => {
+  return async (...args) => {
+    try {
+      return await apiCall(...args);
+    } catch (error) {
+      // Handle network errors
+      if (!error.response) {
+        const networkError = new Error('Network error. Please check your connection.');
+        networkError.code = 'NETWORK_ERROR';
+        networkError.originalError = error;
+        throw networkError;
+      }
+
+      // Handle server errors
+      if (error.response.status >= 500) {
+        const serverError = new Error('Server error. Please try again later.');
+        serverError.code = 'SERVER_ERROR';
+        serverError.originalError = error;
+        throw serverError;
+      }
+
+      // Handle validation errors
+      if (error.response.status === 400) {
+        const validationError = new Error('Please check your input and try again.');
+        validationError.code = 'VALIDATION_ERROR';
+        validationError.originalError = error;
+        throw validationError;
+      }
+
+      throw error;
+    }
+  };
+};
+
 // Quran services with caching and static fallback
 export const quranService = {
-  getSurahs: async () => {
+  getSurahs: withErrorHandling(async () => {
     try {
       const surahs = await fetchWithCache(CACHE_KEYS.SURAHS, () => api.get('/quran/surahs').then(r => r.data));
       return surahs;
@@ -163,23 +198,23 @@ export const quranService = {
       console.log('Using static Surahs data');
       return STATIC_SURAHS;
     }
-  },
-  getSurah: (number) => api.get(`/quran/surahs/${number}`),
-  getSurahVerses: (number, page = 1, limit = 50) =>
-    api.get(`/quran/surahs/${number}/verses?page=${page}&limit=${limit}`),
-  getVerses: (page = 1, limit = 20) =>
-    api.get(`/quran/verses?page=${page}&limit=${limit}`),
-  searchVerses: (query) => api.get(`/quran/search/verses?q=${query}`),
-  getJuz: async () => {
+  }),
+  getSurah: withErrorHandling((number) => api.get(`/quran/surahs/${number}`)),
+  getSurahVerses: withErrorHandling((number, page = 1, limit = 50) =>
+    api.get(`/quran/surahs/${number}/verses?page=${page}&limit=${limit}`)),
+  getVerses: withErrorHandling((page = 1, limit = 20) =>
+    api.get(`/quran/verses?page=${page}&limit=${limit}`)),
+  searchVerses: withErrorHandling((query) => api.get(`/quran/search/verses?q=${query}`)),
+  getJuz: withErrorHandling(async () => {
     try {
       return await fetchWithCache(CACHE_KEYS.JUZ, () => api.get('/quran/juz').then(r => r.data));
     } catch (error) {
       console.log('Using static Juz data');
       return STATIC_JUZ;
     }
-  },
-  getJuzById: (number) => api.get(`/quran/juz/${number}`),
-  getPageByNumber: async (number) => {
+  }),
+  getJuzById: withErrorHandling((number) => api.get(`/quran/juz/${number}`)),
+  getPageByNumber: withErrorHandling(async (number) => {
     // Try cache first
     const cached = getCachedPage(number);
     if (cached) return { data: cached };
@@ -213,10 +248,10 @@ export const quranService = {
 
       throw error;
     }
-  },
-  getPageBySurah: (surahNumber) => api.get(`/quran/pages/surah/${surahNumber}`),
-  getPageByJuz: (juzNumber) => api.get(`/quran/pages/juz/${juzNumber}`),
-  searchTopics: (query) => api.get(`/topics/search?q=${query}`),
+  }),
+  getPageBySurah: withErrorHandling((surahNumber) => api.get(`/quran/pages/surah/${surahNumber}`)),
+  getPageByJuz: withErrorHandling((juzNumber) => api.get(`/quran/pages/juz/${juzNumber}`)),
+  searchTopics: withErrorHandling((query) => api.get(`/topics/search?q=${query}`)),
 };
 
 // Bookmark services
