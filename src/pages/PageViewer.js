@@ -238,9 +238,8 @@ const PageViewer = () => {
           </div>
 
           <div className="pv2-meta-badge">
-            {juz && <span className="pv2-chip">Juz {juz.juzNumber}</span>}
-            <span className="pv2-chip accent">Page {current}</span>
             {surah && <span className="pv2-chip">{surah.nameEnglish}</span>}
+            {juz && <span className="pv2-chip">Juz {juz.juzNumber}</span>}
           </div>
 
           <div className="pv2-topbar-actions">
@@ -258,10 +257,6 @@ const PageViewer = () => {
       {!focus && (
         <>
           <div className="pv2-progress"><div className="pv2-progress-fill" style={{ width: `${progress}%` }} /></div>
-          <div className="pv2-progress-label">
-            {progress}% · {surah ? `${surah.nameArabic} · ${surah.nameEnglish}` : `Page ${current}`}
-            {juz ? ` · Juz ${juz.juzNumber}${juz.estimated ? '≈' : ''}` : ''}
-          </div>
         </>
       )}
 
@@ -352,7 +347,12 @@ const PageViewer = () => {
       {!focus && (
         <div className="pv2-bottom-nav">
           <button type="button" className="pv2-bottom-btn" onClick={() => go(current - 1)} disabled={current <= 1}>Prev</button>
-          <span className="pv2-bottom-info">Page {current}</span>
+          <span className="pv2-bottom-info">
+            {surah ? `${surah.nameArabic}` : ''}
+            {surah ? ' · ' : ''}
+            Page {current}
+            <span className="pv2-bottom-pct">{progress}%</span>
+          </span>
           <button type="button" className="pv2-bottom-btn" onClick={() => go(current + 1)} disabled={current >= TOTAL}>Next</button>
         </div>
       )}

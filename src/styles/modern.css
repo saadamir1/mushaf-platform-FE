@@ -14,20 +14,51 @@
 /* ============================================
    1. HOME PAGE LAYOUT
    ============================================ */
-.home-container{padding:1.5rem 0 2.5rem}
-.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.35rem;gap:1rem}
-.page-header h1{margin:0;font-size:1.75rem;font-weight:700;color:var(--secondary-color);line-height:1.2}
-.subtitle{color:var(--gray-color);margin:.35rem 0 0;font-size:.9rem}
-.stats-badge{display:inline-flex;flex-direction:row;align-items:center;gap:.4rem;background:rgba(13,115,119,.1);border:1px solid rgba(13,115,119,.25);color:var(--primary-color);padding:.4rem .85rem;border-radius:20px;flex-shrink:0}
+.home-container{padding:1.75rem 0 3rem}
+.page-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;gap:1rem}
+.page-header--stack{align-items:flex-start;flex-direction:column}
+.page-header h1{margin:0;font-size:clamp(1.55rem,2.4vw,1.9rem);font-weight:700;color:var(--secondary-color);line-height:1.2}
+.home-kicker{margin:0 0 .35rem;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary-color)}
+.subtitle{color:var(--gray-color);margin:.35rem 0 0;font-size:.92rem;max-width:36rem}
+.stats-badge{display:inline-flex;flex-direction:row;align-items:center;gap:.4rem;background:rgba(12,107,99,.1);border:1px solid rgba(12,107,99,.22);color:var(--primary-color);padding:.4rem .85rem;border-radius:999px;flex-shrink:0}
 .stat-number{font-size:.95rem;font-weight:700;line-height:1}
-.stat-label{font-size:.85rem;font-weight:500;opacity:.85}
-.home-tabs{display:flex;border-bottom:1px solid var(--border-color);margin-bottom:1.5rem}
-.home-tab-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.7rem 1.5rem;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--gray-color);font:600 .95rem/1 inherit;cursor:pointer;margin-bottom:-1px;transition:color .2s,border-color .2s}
+.stat-label{font-size:.82rem;font-weight:500;opacity:.85}
+.home-tabs{display:flex;border-bottom:1px solid var(--border-color);margin-bottom:1.35rem;gap:.15rem}
+.home-tab-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.75rem 1.25rem;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--gray-color);font:600 .92rem/1 inherit;cursor:pointer;margin-bottom:-1px;transition:color .2s,border-color .2s}
 .home-tab-btn:hover{color:var(--primary-color)}
 .home-tab-btn.active{color:var(--primary-color);border-bottom-color:var(--primary-color)}
 .tab-icon{display:flex;align-items:center}
-.tab-content{padding-top:1rem;animation:tabIn .2s ease}
-@keyframes tabIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.tab-content{padding-top:.85rem;animation:tabIn .28s ease}
+@keyframes tabIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.home-welcome{
+  text-align:center;
+  padding:clamp(1.5rem,4vw,2.75rem) 1rem 1.75rem;
+  margin-bottom:1.25rem;
+  animation:tabIn .4s ease;
+}
+.home-welcome-brand{
+  margin:0 0 .65rem;
+  font-family:var(--font-arabic);
+  font-size:clamp(2rem,5vw,2.75rem);
+  font-weight:700;
+  color:var(--primary-color);
+  line-height:1.2;
+}
+.home-welcome-title{
+  margin:0 auto .65rem;
+  max-width:22ch;
+  font-size:clamp(1.55rem,3.5vw,2.15rem);
+  font-weight:700;
+  letter-spacing:-.03em;
+}
+.home-welcome-sub{
+  margin:0 auto 1.35rem;
+  max-width:36rem;
+  color:var(--gray-color);
+  font-size:1rem;
+}
+.home-welcome-actions{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
 
 /* ============================================
    2. SEARCH BAR
@@ -64,24 +95,23 @@
 /* ============================================
    3. SURAH GRID & CARDS
    ============================================ */
-.surah-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.85rem}
-.surah-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.85rem;padding:.9rem 1.1rem;background-color:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;text-decoration:none;color:inherit;transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease;position:relative;overflow:hidden;min-height:80px}
-.surah-card:hover{border-color:var(--primary-color);transform:translateY(-1px);box-shadow:0 6px 20px rgba(13,115,119,.12)}
+.surah-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.surah-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1rem;padding:1.05rem 1.2rem;background-color:var(--card-bg);border:1px solid var(--border-color);border-radius:var(--radius-md);text-decoration:none;color:inherit;transition:border-color .22s ease,transform .22s ease,box-shadow .22s ease;position:relative;overflow:hidden;min-height:88px}
+.surah-card:hover{border-color:var(--primary-color);transform:translateY(-2px);box-shadow:0 10px 28px rgba(12,107,99,.12)}
 .surah-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--primary-color) 0%,var(--accent-color) 100%);transform:scaleY(0);transition:transform .25s ease;border-radius:0 2px 2px 0}
-.surah-card:hover{border-color:var(--primary-color);box-shadow:0 0 0 1px var(--primary-color),0 6px 28px rgba(13,115,119,.22);transform:translateY(-2px)}
 .surah-card:hover::before{transform:scaleY(1)}
 .surah-card:active{transform:translateY(0);box-shadow:none}
-.surah-number{flex-shrink:0;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));color:#fff;border-radius:10px;font-weight:700;font-size:1rem;letter-spacing:-.01em;align-self:center}
-.surah-content{min-width:0;display:flex;flex-direction:column;gap:.15rem}
+.surah-number{flex-shrink:0;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,var(--primary-color),var(--primary-dark));color:#fff;border-radius:12px;font-weight:700;font-size:1rem;letter-spacing:-.01em;align-self:center}
+.surah-content{min-width:0;display:flex;flex-direction:column;gap:.2rem}
 .surah-name-row{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;min-width:0}
-.surah-name{margin:0;font-size:.95rem;font-weight:700;color:var(--secondary-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em;flex-shrink:1}
-.surah-arabic{margin:0;font-size:1rem;color:var(--primary-color);font-weight:600;line-height:1.4;direction:rtl;white-space:nowrap;flex-shrink:0}
-.surah-meta{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center;margin-top:.35rem}
-.meta-badge{display:inline-flex;align-items:center;gap:.2rem;padding:.18rem .55rem;background:rgba(255,255,255,.04);color:var(--gray-color);border:1px solid var(--border-color);border-radius:20px;font-size:.72rem;font-weight:500;white-space:nowrap;flex-shrink:0}
-.meta-badge.revelation{background:rgba(13,115,119,.1);color:var(--primary-color);border-color:rgba(13,115,119,.25);font-weight:600}
-.meta-badge--page{background:rgba(13,115,119,.08)!important;color:var(--primary-color)!important;border-color:rgba(13,115,119,.2)!important;font-weight:600}
-.surah-arrow{flex-shrink:0;font-size:1rem;color:rgba(255,255,255,.25);transition:color .25s ease,transform .25s ease;align-self:center;line-height:1}
-.surah-card:hover .surah-arrow{color:var(--primary-color);transform:translateX(4px)}
+.surah-name{margin:0;font-size:1rem;font-weight:700;color:var(--secondary-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em;flex-shrink:1}
+.surah-arabic{margin:0;font-size:1.1rem;color:var(--primary-color);font-weight:600;line-height:1.4;direction:rtl;white-space:nowrap;flex-shrink:0;font-family:var(--font-arabic)}
+.surah-meta{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:.4rem}
+.meta-badge{display:inline-flex;align-items:center;gap:.2rem;padding:.2rem .55rem;background:var(--light-color);color:var(--gray-color);border:1px solid var(--border-color);border-radius:999px;font-size:.72rem;font-weight:500;white-space:nowrap;flex-shrink:0}
+.meta-badge.revelation{background:rgba(12,107,99,.1);color:var(--primary-color);border-color:rgba(12,107,99,.22);font-weight:600}
+.meta-badge--page{background:var(--gold-soft)!important;color:var(--accent-color)!important;border-color:rgba(169,126,47,.28)!important;font-weight:600}
+.surah-arrow{flex-shrink:0;font-size:1.05rem;color:var(--gray-color);opacity:.45;transition:color .25s ease,transform .25s ease,opacity .25s;align-self:center;line-height:1}
+.surah-card:hover .surah-arrow{color:var(--primary-color);opacity:1;transform:translateX(4px)}
 .skeleton-line{height:13px;background:linear-gradient(90deg,var(--border-color) 25%,var(--light-color) 50%,var(--border-color) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:20px;margin-bottom:.5rem}
 .skeleton-line.short{width:55%}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
@@ -93,8 +123,24 @@
 /* ============================================
    4. AUTH PAGES (Login / Register)
    ============================================ */
-.auth-container { display: flex; align-items: flex-start; justify-content: center; padding: 3rem 1rem 2rem; }
-.auth-card.modern{width:100%;max-width:440px;background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:2.5rem;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 120px);
+  padding: 2.5rem 1rem 2rem;
+  position: relative;
+}
+.auth-card.modern{
+  width:100%;
+  max-width:420px;
+  background:var(--card-bg);
+  border:1px solid var(--border-color);
+  border-radius:var(--radius-lg);
+  padding:2.25rem 2rem;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(8px);
+}
 
 /* Logo + heading */
 .auth-logo{display:block;margin:0 auto 1.25rem;width:60px;height:60px;object-fit:contain}
@@ -200,22 +246,24 @@
    5. NAVBAR (Desktop)
    ============================================ */
 .navbar {
-  background-color: var(--card-bg);
+  background-color: color-mix(in srgb, var(--card-bg) 88%, transparent);
   border-bottom: 1px solid var(--border-color);
   position: sticky; top: 0; z-index: 1000; width: 100%;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 .navbar-container {
-  max-width: min(1600px, 100%); margin: 0 auto; padding: 0 clamp(1rem, 2.5vw, 2rem);
+  max-width: min(1280px, 100%); margin: 0 auto; padding: 0 clamp(1rem, 2.5vw, 2rem);
   display: flex; align-items: center; justify-content: space-between;
   height: 64px; gap: 1rem;
 }
 
 /* Brand / logo */
 .navbar-brand { display: flex; align-items: center; flex-shrink: 0; }
-.brand-link   { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit; }
-.brand-link:hover { opacity: 0.8; }
-.nav-logo     { height: 36px; width: auto; }
-.brand-text   { font-weight: 700; font-size: 1.25rem; color: var(--secondary-color); }
+.brand-link   { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: inherit; }
+.brand-link:hover { opacity: 0.88; }
+.nav-logo     { height: 34px; width: auto; }
+.brand-text   { font-weight: 700; font-size: 1.2rem; color: var(--secondary-color); letter-spacing: -0.02em; }
 
 /* Hamburger (hidden on desktop, shown on mobile) */
 .hamburger {
@@ -685,7 +733,11 @@ padding:1.5rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:v
    Add this section to modern.css (replace all existing .pv- rules)
    ================================================================ */
 
-.pv2-shell{display:flex;flex-direction:column;background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.08);height:calc(100vh - 100px);min-height:600px;position:relative;user-select:none}
+.pv2-shell{display:flex;flex-direction:column;background:var(--card-bg);border:1px solid var(--border-color);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);height:calc(100vh - 100px);min-height:600px;position:relative;user-select:none}
+.pv2-topbar{display:flex;align-items:center;justify-content:space-between;padding:.55rem 1rem;background:color-mix(in srgb,var(--card-bg) 92%,transparent);border-bottom:1px solid var(--border-color);gap:.75rem;flex-shrink:0;min-height:48px;z-index:5;backdrop-filter:blur(8px)}
+.pv2-progress{height:2px;background:var(--border-color);flex-shrink:0}
+.pv2-progress-fill{height:100%;background:linear-gradient(90deg,var(--primary-color),var(--accent-color));transition:width .4s ease;border-radius:0 2px 2px 0}
+.pv2-stage{position:absolute;inset:0;overflow:auto;display:block;padding:1.25rem;background:var(--bg-color);scrollbar-width:thin;scrollbar-color:var(--border-color) transparent}
 
 /* ── Top Bar ── */
 .pv2-topbar{display:flex;align-items:center;justify-content:space-between;padding:.625rem 1rem;background:var(--card-bg);border-bottom:1px solid var(--border-color);gap:.75rem;flex-shrink:0;min-height:52px;z-index:5}

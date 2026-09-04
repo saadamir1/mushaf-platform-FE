@@ -14,6 +14,8 @@ const Navbar = () => {
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
+  const isAuthRoute = ['/login', '/register', '/forgot-password', '/reset-password', '/verify-email']
+    .some((p) => location.pathname.startsWith(p));
 
   // Close user dropdown when clicking outside
   useEffect(() => {
@@ -238,20 +240,42 @@ const Navbar = () => {
                 >
                   {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
                 </button>
-                <Link
-                  to="/login"
-                  className="btn btn-outline-primary btn-sm"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/register"
-                  className="btn btn-primary btn-sm"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Get Started
-                </Link>
+                {!isAuthRoute && (
+                  <>
+                    <Link
+                      to="/login"
+                      className="btn btn-outline-primary btn-sm"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      to="/register"
+                      className="btn btn-primary btn-sm"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
+                {isAuthRoute && location.pathname !== '/login' && (
+                  <Link
+                    to="/login"
+                    className="btn btn-outline-primary btn-sm"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Sign In
+                  </Link>
+                )}
+                {isAuthRoute && location.pathname === '/login' && (
+                  <Link
+                    to="/register"
+                    className="btn btn-primary btn-sm"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Create account
+                  </Link>
+                )}
               </div>
             </>
           )}

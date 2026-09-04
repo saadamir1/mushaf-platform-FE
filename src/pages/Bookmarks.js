@@ -43,10 +43,22 @@ const Bookmarks = () => {
       <h2><FiBookmark size={24} /> My Bookmarks</h2>
 
       {progress && (
-        <div className="card" style={{ marginBottom: '2rem', textAlign: 'center' }}>
+        <div className="card bookmarks-progress">
           <h3>Reading Progress</h3>
-          <div style={{ fontSize: '2rem', margin: '1rem 0' }}>{progress.completionPercentage}%</div>
-          <p>Last read: Surah {progress.lastSurahNumber}, Verse {progress.lastVerseId}</p>
+          <div className="bookmarks-progress-pct">{progress.completionPercentage ?? 0}%</div>
+          <p>
+            Last read:{' '}
+            {progress.lastPageNumber
+              ? `Page ${progress.lastPageNumber}`
+              : progress.lastSurahNumber
+                ? `Surah ${progress.lastSurahNumber}`
+                : 'Not set yet'}
+          </p>
+          {progress.lastPageNumber && (
+            <Link to={`/page/${progress.lastPageNumber}`} className="btn btn-primary btn-sm">
+              Continue
+            </Link>
+          )}
         </div>
       )}
 
@@ -54,7 +66,7 @@ const Bookmarks = () => {
         <div className="empty-state">
           <div className="empty-icon"><FiBookmark size={24} /></div>
           <h3>No Bookmarks Yet</h3>
-          <p>Start reading the Quran and bookmark your favorite verses!</p>
+          <p>Bookmark Mushaf pages as you read to find them here later.</p>
           <Link to="/" className="btn btn-primary">Start Reading</Link>
         </div>
       ) : (

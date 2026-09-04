@@ -52,6 +52,7 @@ const Home = () => {
   }, [user]);
 
   const resumePage = serverProgress?.lastPageNumber || lastPage || 1;
+  const hasProgress = Boolean(lastPage || serverProgress?.lastPageNumber);
 
   const filteredSurahs = surahs.filter((surah) => {
     const q = debounced.toLowerCase();
@@ -65,21 +66,46 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <div className="page-header home-hero">
-        <div>
-          <h1>Mushaf Platform</h1>
-          <p className="subtitle">Quran Aziz — clear page reading with Urdu topics</p>
+      {!hasProgress ? (
+        <section className="home-welcome">
+          <p className="home-welcome-brand">Mushaf</p>
+          <h1 className="home-welcome-title">Read the Quran Aziz, page by page</h1>
+          <p className="home-welcome-sub">
+            Clear Mushaf pages with Urdu topics — open any Surah or continue later where you left off.
+          </p>
+          <div className="home-welcome-actions">
+            <button type="button" className="btn btn-primary btn-lg" onClick={() => navigate('/page/1')}>
+              <FiPlay /> Start reading
+            </button>
+            <button type="button" className="btn btn-outline-primary" onClick={() => setActiveTab('surahs')}>
+              Browse Surahs
+            </button>
+          </div>
+        </section>
+      ) : (
+        <div className="page-header home-hero">
+          <div>
+            <p className="home-kicker">Mushaf</p>
+            <h1>Continue your reading</h1>
+            <p className="subtitle">Quran Aziz — pages, topics, and a calm daily rhythm</p>
+          </div>
+          <div className="home-hero-stats">
+            <div className="stats-badge">
+              <span className="stat-number">{QURAN.TOTAL_PAGES}</span>
+              <span className="stat-label">Pages</span>
+            </div>
+            <div className="stats-badge">
+              <span className="stat-number">{streak.count || 0}</span>
+              <span className="stat-label">Day streak</span>
+            </div>
+          </div>
         </div>
-        <div className="home-hero-stats">
-          <div className="stats-badge"><span className="stat-number">{QURAN.TOTAL_PAGES}</span><span className="stat-label">Pages</span></div>
-          <div className="stats-badge"><span className="stat-number">{streak.count || 0}</span><span className="stat-label">Day streak</span></div>
-        </div>
-      </div>
+      )}
 
-      <div className="home-smart-grid">
+      <div className={`home-smart-grid${hasProgress ? ' home-smart-grid--resume' : ''}`}>
         <button type="button" className="home-resume-card" onClick={() => navigate(`/page/${resumePage}`)}>
           <div className="home-resume-icon"><FiPlay /></div>
-          <div>
+          <div className="home-resume-body">
             <strong>Continue reading</strong>
             <p>Page {resumePage} · {pageProgress(resumePage)}% complete</p>
           </div>

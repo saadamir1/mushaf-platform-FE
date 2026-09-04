@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiZap, FiCalendar, FiTarget, FiTrendingUp } from 'react-icons/fi';
+import { FiZap, FiCalendar, FiTarget, FiTrendingUp, FiPlay } from 'react-icons/fi';
 import { quranService } from '../services/api';
 import { getLastPage, buildKhatmPlan, getReadingStreak, pageProgress } from '../utils';
 
@@ -34,13 +34,15 @@ const Insights = () => {
 
   const localPlan = buildKhatmPlan(lastPage, days);
   const activePlan = plan?.schedule ? plan : localPlan;
+  const resumeAt = suggest?.continueAt || lastPage || 1;
 
   return (
     <div className="home-container insights-page">
-      <div className="page-header">
+      <div className="page-header page-header--stack">
         <div>
+          <p className="home-kicker">Guide</p>
           <h1>Reading guide</h1>
-          <p className="subtitle">Plan your reading and track progress</p>
+          <p className="subtitle">Track progress and keep a simple khatm plan</p>
         </div>
       </div>
 
@@ -50,34 +52,36 @@ const Insights = () => {
         <div className="insights-stat"><FiCalendar /><div><strong>{activePlan.pagesPerDay}</strong><span>Pages / day</span></div></div>
       </div>
 
-      {daily && (
-        <button type="button" className="insights-daily" onClick={() => navigate(`/page/${daily.pageNumber}`)}>
-          <strong>{daily.title || 'Today’s focus'}</strong>
-          <p>{daily.message}</p>
-          <span>{daily.nameArabic} · {daily.nameEnglish} · Page {daily.pageNumber}</span>
-        </button>
-      )}
+      <div className="insights-focus-row">
+        {daily && (
+          <button type="button" className="insights-daily" onClick={() => navigate(`/page/${daily.pageNumber}`)}>
+            <strong>{daily.title || 'Today’s focus'}</strong>
+            <p>{daily.message}</p>
+            <span>{daily.nameArabic} · Page {daily.pageNumber}</span>
+          </button>
+        )}
 
-      {suggest?.context && (
         <div className="insights-context card-soft">
           <h3>Where you are</h3>
           <p>
-            {suggest.context.surah?.nameEnglish || '—'}
-            {suggest.context.juz ? ` · Juz ${suggest.context.juz.juzNumber}` : ''}
-            {' · '}{suggest.context.progressPercent}%
+            {suggest?.context?.surah?.nameEnglish || 'Open any page to begin'}
+            {suggest?.context?.juz ? ` · Juz ${suggest.context.juz.juzNumber}` : ''}
+            {suggest?.context?.progressPercent != null ? ` · ${suggest.context.progressPercent}%` : ''}
           </p>
-          <Link className="btn btn-primary" to={`/page/${suggest.continueAt || lastPage}`}>Resume page {suggest.continueAt || lastPage}</Link>
+          <Link className="btn btn-primary insights-resume" to={`/page/${resumeAt}`}>
+            <FiPlay /> Resume page {resumeAt}
+          </Link>
         </div>
-      )}
+      </div>
 
       <div className="insights-plan card-soft">
         <div className="insights-plan-head">
           <h3>Khatm planner</h3>
-          <select value={days} onChange={(e) => setDays(Number(e.target.value))}>
+          <select value={days} onChange={(e) => setDays(Number(e.target.value))} aria-label="Plan length">
             {[7, 15, 30, 60, 90].map((d) => <option key={d} value={d}>{d} days</option>)}
           </select>
         </div>
-        {loading ? <p>Building plan…</p> : (
+        {loading ? <p className="insights-muted">Building plan…</p> : (
           <div className="insights-schedule">
             {(activePlan.schedule || []).slice(0, 14).map((row) => (
               <button
