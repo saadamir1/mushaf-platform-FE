@@ -6,11 +6,12 @@ import PrivateRoute from "./components/PrivateRoute";
 import Layout from "./components/Layout";
 import Loader from "./components/Loader";
 import ErrorBoundary from "./components/ErrorBoundary";
-import './utils/errorHandler'; // Import error handler to ensure it's initialized
+import './utils/errorHandler';
 
 const Home = React.lazy(() => import("./pages/Home"));
 const PageViewer = React.lazy(() => import("./pages/PageViewer"));
 const TopicSearch = React.lazy(() => import("./pages/TopicSearch"));
+const Insights = React.lazy(() => import("./pages/Insights"));
 const Bookmarks = React.lazy(() => import("./pages/Bookmarks"));
 const Login = React.lazy(() => import("./pages/Login"));
 const Register = React.lazy(() => import("./pages/Register"));
@@ -30,26 +31,18 @@ function App() {
             <Suspense fallback={<Loader />}>
               <Layout>
                 <Routes>
-                  {/* Public Quran Routes */}
                   <Route path="/" element={<Home />} />
                   <Route path="/page/:pageNumber" element={<PageViewer />} />
                   <Route path="/topic-search" element={<TopicSearch />} />
-                  
-                  {/* Protected User Routes */}
+                  <Route path="/insights" element={<Insights />} />
                   <Route path="/bookmarks" element={<PrivateRoute><Bookmarks /></PrivateRoute>} />
                   <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-                  
-                  {/* Admin Only */}
                   <Route path="/admin" element={<PrivateRoute adminOnly={true}><Admin /></PrivateRoute>} />
-                  
-                  {/* Auth Routes */}
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/reset-password" element={<ResetPassword />} />
                   <Route path="/verify-email" element={<VerifyEmail />} />
-                  
-                  {/* 404 */}
                   <Route path="/404" element={<NotFound />} />
                   <Route path="*" element={<Navigate to="/404" replace />} />
                 </Routes>

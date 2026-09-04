@@ -87,9 +87,27 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateProfile = async (userData) => {
+    try {
+      setError(null);
+      setLoading(true);
+      const { userService } = await import('../services/api');
+      await userService.updateProfile(userData);
+      await fetchUserProfile();
+      setLoading(false);
+      return true;
+    } catch (err) {
+      setLoading(false);
+      const msg = err.response?.data?.message;
+      setError(Array.isArray(msg) ? msg.join(', ') : (msg || 'Failed to update profile'));
+      return false;
+    }
+  };
+
   const logout = useCallback(() => {
     tokenHelpers.clearTokens();
     setUser(null);
+    setError(null);
   }, []);
 
   const register = async (userData) => {
@@ -101,30 +119,17 @@ export const AuthProvider = ({ children }) => {
       return true;
     } catch (err) {
       setLoading(false);
-      const errorMessage = err.response?.data?.message || 'Registration failed. Please try again.';
-      setError(errorMessage);
-      return false;
-    }
-  };
-
-  const updateProfile = async (userData) => {
-    try {
-      setError(null);
-      setLoading(true);
-      setLoading(false);
-      return true;
-    } catch (err) {
-      setLoading(false);
-      setError(err.response?.data?.message || 'Failed to update profile');
+      const msg = err.response?.data?.message;
+      setError(Array.isArray(msg) ? msg.join(', ') : (msg || 'Registration failed. Please try again.'));
       return false;
     }
   };
 
   const refreshUser = useCallback(async () => {
-    if (user) {
+    if (tokenHelpers.getAccessToken()) {
       await fetchUserProfile();
     }
-  }, [user, fetchUserProfile]);
+  }, [fetchUserProfile]);
 
   const value = {
     user,

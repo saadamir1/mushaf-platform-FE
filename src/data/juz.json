@@ -2,9 +2,301 @@
   {
     "id": 1,
     "juzNumber": 1,
-    "startVerse": "1:1",
-    "endVerse": "2:141",
-    "startPageNumber": null,
-    "createdAt": "2026-02-21T19:58:30.769Z"
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 37,
+    "endPageNumber": 69,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.048Z"
+  },
+  {
+    "id": 2,
+    "juzNumber": 2,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 70,
+    "endPageNumber": 102,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 3,
+    "juzNumber": 3,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 103,
+    "endPageNumber": 135,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 4,
+    "juzNumber": 4,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 136,
+    "endPageNumber": 168,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 5,
+    "juzNumber": 5,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 169,
+    "endPageNumber": 201,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 6,
+    "juzNumber": 6,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 202,
+    "endPageNumber": 234,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 7,
+    "juzNumber": 7,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 235,
+    "endPageNumber": 267,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 8,
+    "juzNumber": 8,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 268,
+    "endPageNumber": 300,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 9,
+    "juzNumber": 9,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 301,
+    "endPageNumber": 333,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 10,
+    "juzNumber": 10,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 334,
+    "endPageNumber": 366,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 11,
+    "juzNumber": 11,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 367,
+    "endPageNumber": 399,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 12,
+    "juzNumber": 12,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 400,
+    "endPageNumber": 432,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 13,
+    "juzNumber": 13,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 433,
+    "endPageNumber": 465,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 14,
+    "juzNumber": 14,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 466,
+    "endPageNumber": 498,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 15,
+    "juzNumber": 15,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 499,
+    "endPageNumber": 531,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 16,
+    "juzNumber": 16,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 532,
+    "endPageNumber": 564,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 17,
+    "juzNumber": 17,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 565,
+    "endPageNumber": 597,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 18,
+    "juzNumber": 18,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 598,
+    "endPageNumber": 630,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 19,
+    "juzNumber": 19,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 631,
+    "endPageNumber": 663,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 20,
+    "juzNumber": 20,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 664,
+    "endPageNumber": 696,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 21,
+    "juzNumber": 21,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 697,
+    "endPageNumber": 729,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 22,
+    "juzNumber": 22,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 730,
+    "endPageNumber": 762,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 23,
+    "juzNumber": 23,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 763,
+    "endPageNumber": 795,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 24,
+    "juzNumber": 24,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 796,
+    "endPageNumber": 828,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 25,
+    "juzNumber": 25,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 829,
+    "endPageNumber": 861,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 26,
+    "juzNumber": 26,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 862,
+    "endPageNumber": 894,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 27,
+    "juzNumber": 27,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 895,
+    "endPageNumber": 927,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 28,
+    "juzNumber": 28,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 928,
+    "endPageNumber": 960,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 29,
+    "juzNumber": 29,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 961,
+    "endPageNumber": 993,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
+  },
+  {
+    "id": 30,
+    "juzNumber": 30,
+    "startVerse": null,
+    "endVerse": null,
+    "startPageNumber": 994,
+    "endPageNumber": 1021,
+    "method": "content-span/30",
+    "createdAt": "2026-09-04T12:09:54.049Z"
   }
 ]

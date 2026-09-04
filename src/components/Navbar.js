@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
-import { FiBook, FiSearch, FiBookmark, FiSun, FiMoon, FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
+import { FiBook, FiSearch, FiBookmark, FiSun, FiMoon, FiUser, FiSettings, FiLogOut, FiZap } from 'react-icons/fi';
 import { ARIA_LABELS } from '../utils/constants';
 
 const Navbar = () => {
@@ -89,6 +89,14 @@ const Navbar = () => {
                 >
                   <span className="nav-icon"><FiSearch size={18} /></span>
                   <span className="nav-text">Topic Search</span>
+                </Link>
+                <Link
+                  to="/insights"
+                  className={`nav-link ${isActive("/insights") ? "active" : ""}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="nav-icon"><FiZap size={18} /></span>
+                  <span className="nav-text">Guide</span>
                 </Link>
                 <Link
                   to="/bookmarks"
@@ -210,6 +218,14 @@ const Navbar = () => {
                 >
                   <span className="nav-icon"><FiSearch size={18} /></span>
                   <span className="nav-text">Topic Search</span>
+                </Link>
+                <Link
+                  to="/insights"
+                  className={`nav-link ${isActive("/insights") ? "active" : ""}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="nav-icon"><FiZap size={18} /></span>
+                  <span className="nav-text">Guide</span>
                 </Link>
               </nav>
 

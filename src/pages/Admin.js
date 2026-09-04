@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { userService } from "../services/api";
+import { userService, uploadService } from "../services/api";
 
 const Admin = () => {
     const { user: currentUser, isAdmin } = useAuth();
@@ -12,6 +12,9 @@ const Admin = () => {
     const [success, setSuccess] = useState("");
     const [editingUser, setEditingUser] = useState(null);
     const [actionLoading, setActionLoading] = useState(null);
+    const [pageNumber, setPageNumber] = useState("");
+    const [pageFile, setPageFile] = useState(null);
+    const [uploadBusy, setUploadBusy] = useState(false);
 
     useEffect(() => {
         if (!currentUser) {
@@ -36,6 +39,44 @@ const Admin = () => {
             setError("Failed to fetch users");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleMushafUpload = async (e) => {
+        e.preventDefault();
+        if (!pageFile) {
+            setError("Choose a page image first");
+            return;
+        }
+        try {
+            setUploadBusy(true);
+            setError("");
+            const res = await uploadService.uploadMushafPage(pageFile, pageNumber || undefined);
+            const m = res.data?.mapping;
+            setSuccess(
+                `Page ${res.data?.page?.pageNumber} saved. Map auto-updated (${m?.contentStart}–${m?.contentEnd}).`,
+            );
+            setPageFile(null);
+            setPageNumber("");
+            setTimeout(() => setSuccess(""), 5000);
+        } catch (err) {
+            setError(err.response?.data?.message || "Page upload failed");
+        } finally {
+            setUploadBusy(false);
+        }
+    };
+
+    const handleRemap = async () => {
+        try {
+            setUploadBusy(true);
+            const res = await uploadService.remapPages();
+            const m = res.data;
+            setSuccess(`Remap done: content ${m.contentStart}–${m.contentEnd}`);
+            setTimeout(() => setSuccess(""), 4000);
+        } catch (err) {
+            setError(err.response?.data?.message || "Remap failed");
+        } finally {
+            setUploadBusy(false);
         }
     };
 
@@ -108,13 +149,40 @@ const Admin = () => {
                 <h1>Admin Panel</h1>
             </div>
 
-            <div className="admin-card">
+            <div className="admin-card" style={{ marginBottom: "1.5rem" }}>
                 {(error || success) && (
                     <div className={error ? "error-message" : "success-message"}>
                         {error || success}
                     </div>
                 )}
+                <h2>Mushaf pages</h2>
+                <p style={{ marginTop: 0, color: "var(--gray-color)", maxWidth: 560 }}>
+                    Upload a page image. Surah and Para mapping updates automatically.
+                    Page number is optional — leave blank to append as next page.
+                </p>
+                <form onSubmit={handleMushafUpload} className="mushaf-upload-form">
+                    <input
+                        type="number"
+                        min={1}
+                        placeholder="Page # (optional)"
+                        value={pageNumber}
+                        onChange={(e) => setPageNumber(e.target.value)}
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setPageFile(e.target.files?.[0] || null)}
+                    />
+                    <button type="submit" className="btn btn-sm btn-primary" disabled={uploadBusy}>
+                        {uploadBusy ? "Working…" : "Upload + auto-map"}
+                    </button>
+                    <button type="button" className="btn btn-sm btn-outline" onClick={handleRemap} disabled={uploadBusy}>
+                        Rebuild map
+                    </button>
+                </form>
+            </div>
 
+            <div className="admin-card">
                 <h2>User Management</h2>
 
                 {loading ? (
@@ -237,6 +305,20 @@ const Admin = () => {
                 .admin-card h2 {
                     margin: 0 0 1.5rem 0;
                     color: var(--secondary-color);
+                }
+                .mushaf-upload-form {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.75rem;
+                    align-items: center;
+                }
+                .mushaf-upload-form input[type="number"] {
+                    width: 9rem;
+                    padding: 0.5rem;
+                    border: 1px solid var(--border-color);
+                    border-radius: 4px;
+                    background: var(--bg-color);
+                    color: var(--text-color);
                 }
                 .users-table-container {
                     overflow-x: auto;

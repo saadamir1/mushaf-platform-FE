@@ -54,8 +54,22 @@ body {
 }
 
 .app-container { display: flex; flex-direction: column; min-height: 100vh; }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
-.main-content { flex: 1; padding-bottom: 2rem; }
+.container {
+  max-width: min(1600px, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 2.5vw, 2rem);
+  width: 100%;
+}
+.main-content {
+  flex: 1;
+  padding-bottom: 2rem;
+  background:
+    radial-gradient(1200px 480px at 50% -10%, rgba(13, 115, 119, 0.08), transparent 60%);
+}
+[data-theme="dark"] .main-content {
+  background:
+    radial-gradient(1200px 520px at 50% -12%, rgba(20, 160, 133, 0.1), transparent 55%);
+}
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 { 

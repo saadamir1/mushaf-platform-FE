@@ -61,8 +61,8 @@ const Login = () => {
     <div className="auth-container">
       <div className="auth-card modern">
         <img src="/logo.png" alt="Mushaf Platform" className="auth-logo" />
-        <h2>Welcome Back</h2>
-        <p className="auth-subtitle">Sign in to continue your Quran journey</p>
+        <h2>Sign in</h2>
+        <p className="auth-subtitle">Access your bookmarks and reading progress</p>
 
         {successMessage && <div className="success-message">{successMessage}</div>}
 
